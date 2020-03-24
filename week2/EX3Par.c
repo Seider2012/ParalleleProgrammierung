@@ -1,13 +1,13 @@
 	#include <stdlib.h>
 	#include <stdio.h>
 	#include <errno.h>
-
+	#include <time.h>
 	#include <pthread.h>
 	#include <sys/types.h>
 	#include <unistd.h>
 
-	#define NUM_THREADS 5
-	#define DOTS 50000
+	#define NUM_THREADS 8
+	#define DOTS 500000000
 
 	pthread_t ntid[NUM_THREADS];
 	long double nerg[NUM_THREADS];
@@ -17,6 +17,7 @@
 
 	int main() {
 
+		clock_t begin = clock();
 		srand((unsigned) time(NULL));
 		int err;
 		long double sum =0;
@@ -37,6 +38,8 @@
 		}
 		long double pi = sum /NUM_THREADS;
 		printf("PI is %Lf \n",pi);
+		clock_t end = clock();
+		printf("time= %f\n",(double)(end-begin)/CLOCKS_PER_SEC);
 		return EXIT_SUCCESS;
 	}
 
