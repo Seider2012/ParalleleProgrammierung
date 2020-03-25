@@ -1,0 +1,29 @@
+  Loading gcc/8.2.0
+--------------------------------------------------------------------------------
+I1 cache:         32768 B, 64 B, 8-way associative
+D1 cache:         32768 B, 64 B, 8-way associative
+LL cache:         6291456 B, 64 B, 24-way associative
+Command:          ./EX2A.out
+Data file:        EX2A
+Events recorded:  Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Events shown:     Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Event sort order: Ir I1mr ILmr Dr D1mr DLmr Dw D1mw DLmw
+Thresholds:       0.1 100 100 100 100 100 100 100 100
+Include dirs:     
+User annotated:   
+Auto-annotation:  on
+
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr            Dr      D1mr      DLmr          Dw      D1mw      DLmw 
+--------------------------------------------------------------------------------
+4,573,654,075  753  748 1,500,090,228 3,127,467 3,127,045 425,023,797 4,688,097 4,688,057  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+           Ir I1mr ILmr          Dr      D1mr      DLmr          Dw      D1mw      DLmw  file:function
+--------------------------------------------------------------------------------
+2,175,110,023    6    6 700,050,007 3,125,003 3,125,003 125,010,007 4,687,501 4,687,501  ???:hadamard
+1,298,387,097    2    2 400,000,000         4         2 200,000,000         0         0  ???:random_r
+  850,000,000    3    3 300,000,000         1         1  50,000,000         0         0  ???:random
+  200,000,000    1    1  50,000,000         0         0  50,000,000         0         0  ???:rand
+   50,000,191   19   15  50,000,092         7         3          27         1         1  ???:???
+

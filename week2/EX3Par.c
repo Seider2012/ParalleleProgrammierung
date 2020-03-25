@@ -6,7 +6,7 @@
 	#include <sys/types.h>
 	#include <unistd.h>
 
-	#define NUM_THREADS 8
+	#define NUM_THREADS 1
 	#define DOTS 500000000
 
 	pthread_t ntid[NUM_THREADS];
@@ -30,7 +30,7 @@
 			pthread_create(&ntid[i], NULL, mythread,NULL );
 		}
 
-		for(int i=0; i<NUM_THREADS;i++){
+		for(int i=1; i<NUM_THREADS;i++){
 			pthread_join(ntid[i], NULL);
 		}
 		for(int i=0; i<NUM_THREADS;i++){
