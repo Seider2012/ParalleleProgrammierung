@@ -21,5 +21,6 @@
 
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
+module load openmpi/4.0.1
 
 ./EX2.out
