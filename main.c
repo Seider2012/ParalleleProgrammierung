@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <omp.h>
-#include "week3/EX2Dynamic.c"
-#include "week3/EX2Static.c"
-#include "week3/EX2Guided.c"
+#include "week3/EX2.c"
 #include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
-
+#include "week3/EX2Dynamic.c"
+#include "week3/EX2Static.c"
+#include "week3/EX2Guided.c"
 
 int main(int argc, char *argv[]) {
 

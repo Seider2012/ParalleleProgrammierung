@@ -22,27 +22,4 @@
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
 
-./EX2.out 0 10000 0
-./EX2.out 0 20000 0
-./EX2.out 0 30000 0
-./EX2.out 1 10000 0
-./EX2.out 1 20000 0
-./EX2.out 1 30000 0
-./EX2.out 3 10000 0
-./EX2.out 3 20000 0
-./EX2.out 3 30000 0
-./EX2.out 4 10000 0
-./EX2.out 4 20000 0
-./EX2.out 4 30000 0
-./EX2.out 3 10000 1
-./EX2.out 3 20000 1
-./EX2.out 3 30000 1
-./EX2.out 4 10000 1
-./EX2.out 4 20000 1
-./EX2.out 4 30000 1
-./EX2.out 3 10000 2
-./EX2.out 3 20000 2
-./EX2.out 3 30000 2
-./EX2.out 4 10000 2
-./EX2.out 4 20000 2
-./EX2.out 4 30000 2
+./EX2.out
