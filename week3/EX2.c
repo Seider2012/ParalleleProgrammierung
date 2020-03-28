@@ -111,6 +111,26 @@ int EX2(int var, int n) {
                 }
             }
         }
+    } else if (var == 8) {
+// hadamard_rows
+#pragma omp parallel private(i,j)
+        {
+            for (i = 0; i < n; ++i) {
+                for (j = 0; j < n; ++j) {
+                    c[i * n + j] = a[i * n + j] * b[i * n + j];
+                }
+            }
+        }
+    } else if (var == 9) {
+// hadamard_cols
+#pragma omp parallel private(i,j)
+        {
+            for (j = 0; j < n; ++j) {
+                for (i = 0; i < n; ++i) {
+                    c[i * n + j] = a[i * n + j] * b[i * n + j];
+                }
+            }
+        }
     }
 
 
@@ -139,6 +159,12 @@ int EX2(int var, int n) {
                "Work took %f sec. time.\n", n, end - start);
     else if (var == 7)
         printf("hadamard:G Cols Par n=%d \n"
+               "Work took %f sec. time.\n", n, end - start);
+    else if (var == 8)
+        printf("hadamard:Row Par n=%d \n"
+               "Work took %f sec. time.\n", n, end - start);
+    else if (var == 9)
+        printf("hadamard:Cols Par n=%d \n"
                "Work took %f sec. time.\n", n, end - start);
 
     free(a);
