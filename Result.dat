@@ -1,0 +1,62 @@
+  Loading gcc/8.2.0
+  Loading openmpi/4.0.1 for compiler gcc-8.2.0
+/usr/sge/lcc2/spool/n004/job_scripts/49215: line 29: ./home/Parallele/EX2.out: No such file or directory
+  Loading gcc/8.2.0
+  Loading openmpi/4.0.1 for compiler gcc-8.2.0
+/usr/sge/lcc2/spool/n004/job_scripts/49216: line 29: ./home/Parallele/EX2.out: No such file or directory
+  Loading openmpi/4.0.1 for compiler gcc-8.2.0
+/usr/sge/lcc2/spool/n006/job_scripts/49217: line 29: ./Parallele/EX2.out: No such file or directory
+  Loading gcc/8.2.0
+  Loading openmpi/4.0.1 for compiler gcc-8.2.0
+/usr/sge/lcc2/spool/n004/job_scripts/49218: line 29: 17668 Segmentation fault      (core dumped) ./EX2.out
+  Loading gcc/8.2.0
+/usr/sge/lcc2/spool/n004/job_scripts/49219: line 25: ./Parallele/EX2.out: No such file or directory
+  Loading gcc/8.2.0
+hadamard:Row Seq n=10000 
+Work took 0.266481 sec. time.
+hadamard:Col Seq n=10000 
+Work took 1.185693 sec. time.
+hadamard:S Row Par n=10000 
+Work took 0.146015 sec. time.
+hadamard:S Cols Par n=10000 
+Work took 0.362504 sec. time.
+hadamard:D Row Par n=10000 
+Work took 0.540779 sec. time.
+hadamard:D Cols Par n=10000 
+Work took 1.586613 sec. time.
+hadamard:G Row Par n=10000 
+Work took 0.154085 sec. time.
+hadamard:G Cols Par n=10000 
+Work took 0.377778 sec. time.
+hadamard:Row Seq n=20000 
+Work took 1.074584 sec. time.
+hadamard:Col Seq n=20000 
+Work took 5.203914 sec. time.
+hadamard:S Row Par n=20000 
+Work took 0.544872 sec. time.
+hadamard:S Cols Par n=20000 
+Work took 5.105749 sec. time.
+hadamard:D Row Par n=20000 
+Work took 1.937780 sec. time.
+hadamard:D Cols Par n=20000 
+Work took 6.400896 sec. time.
+hadamard:G Row Par n=20000 
+Work took 0.553128 sec. time.
+hadamard:G Cols Par n=20000 
+Work took 4.930709 sec. time.
+hadamard:Row Seq n=30000 
+Work took 2.394536 sec. time.
+hadamard:Col Seq n=30000 
+Work took 11.200492 sec. time.
+hadamard:S Row Par n=30000 
+Work took 1.326220 sec. time.
+hadamard:S Cols Par n=30000 
+Work took 4.125695 sec. time.
+hadamard:D Row Par n=30000 
+Work took 3.996084 sec. time.
+hadamard:D Cols Par n=30000 
+Work took 14.130544 sec. time.
+hadamard:G Row Par n=30000 
+Work took 1.328855 sec. time.
+hadamard:G Cols Par n=30000 
+Work took 4.188243 sec. time.
