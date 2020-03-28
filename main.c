@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <omp.h>
 #include "week3/EX2.c"
 #include <errno.h>
 #include <limits.h>
@@ -8,9 +7,18 @@
 #include "week3/EX2Static.c"
 #include "week3/EX2Guided.c"
 
-int main(int argc, char *argv[]) {
+    int main(int argc, char *argv[]) {
 
-    char *p;
+        for (int i = 1; i < 4; i++) {
+            for (int j = 0; j < 8; j++) {
+                EX2(j, i * 10000);
+            }
+        }
+
+        return EXIT_SUCCESS;
+
+
+        char *p;
     errno = 0;
     long var = 0;
     int n;

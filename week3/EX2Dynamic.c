@@ -20,16 +20,14 @@ int EX2Dynamic(int var,int n) {
 
     int i, j;
 
-    /*
+/*
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < n; ++j) {
-            a[i*n+j] =  1;
-            b[i*n+j]= 2;
+            a[i * n + j] = 1;
+            b[i * n + j] = 2;
         }
     }
-     */
-
-
+*/
 
     if (var == 0) {
         // hadamard_rows
@@ -38,17 +36,6 @@ int EX2Dynamic(int var,int n) {
                 c[i * n + j] = a[i * n + j] * b[i * n + j];
             }
         }
-
-        printf("hadamard:Row Seq n=%d \n",n);
-        /*
-         printf("hadamard: Seq \n"
-                "        for (i = 0; i < n; ++i) {\n"
-                "            for (j = 0; j < n; ++j) {\n"
-                "                c[i * n + j] = a[i * n + j] * b[i * n + j];\n"
-                "            }\n"
-                "        }\n"
-                "\n ");
-                */
     } else if (var == 1) {
         // hadamard_cols
         for (j = 0; j < n; ++j) {
@@ -56,14 +43,6 @@ int EX2Dynamic(int var,int n) {
                 c[i * n + j] = a[i * n + j] * b[i * n + j];
             }
         }
-        printf("hadamard:Col Seq n=%d \n",n);
-        /* printf("hadamard: Seq \n"
-                "            for (j = 0; j < n; ++j) {\n"
-                "                for (i = 0; i < n; ++i) {\n"
-                "                    c[i * n + j] = a[i * n + j] * b[i * n + j];\n"
-                "                }\n"
-                "            }\n"
-                "\n ");*/
     } else if (var == 2) {
         // hadamard_rows
 #pragma omp parallel private(j)
@@ -75,17 +54,6 @@ int EX2Dynamic(int var,int n) {
                 }
             }
         }
-        printf("hadamard:D Row Par n=%d \n",n);
-/*
-        printf("hadamard: Parallel \n"
-               " for (i = 0; i < n; ++i) {\n"
-               "                for (j = 0; j < n; ++j) {\n"
-               "                    c[i * n + j] = a[i * n + j] * b[i * n + j];\n"
-               "                }\n"
-               "            }\n"
-               "\n ");
-               */
-
     } else if (var == 3) {
         // hadamard_cols
 #pragma omp parallel private(i)
@@ -97,17 +65,6 @@ int EX2Dynamic(int var,int n) {
                 }
             }
         }
-        printf("hadamard:D Cols Par n=%d \n",n);
-
-        /*
-        printf("hadamard: Parallel \n"
-               "            for (j = 0; j < n; ++j) {\n"
-               "                for (i = 0; i < n; ++i) {\n"
-               "                    c[i * n + j] = a[i * n + j] * b[i * n + j];\n"
-               "                }\n"
-               "            }\n"
-               "\n ");
-               */
     }
 
 
@@ -122,7 +79,22 @@ int EX2Dynamic(int var,int n) {
     end = omp_get_wtime();
 
 
-    printf("Work took %f sec. time.\n", end - start);
+
+    if(var==0)
+        printf("hadamard:Row Seq n=%d \n"
+               "Work took %f sec. time.\n",n,end - start);
+    else if(var==1)
+        printf("hadamard:Col Seq n=%d \n"
+               "Work took %f sec. time.\n",n,end - start);
+    else if(var==2)
+        printf("hadamard:D Row Par n=%d \n"
+               "Work took %f sec. time.\n",n,end - start);
+    else if(var==3)
+        printf("hadamard:D Cols Par n=%d \n"
+               "Work took %f sec. time.\n",n,end - start);
+
+
+
 
 
     free(a);
