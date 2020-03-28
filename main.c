@@ -17,12 +17,12 @@
 
         return EXIT_SUCCESS;
 
-
+/*
         char *p;
-    errno = 0;
-    long var = 0;
-    int n;
-    int choice;
+       errno = 0;
+          long var = 0;
+       int n;
+      int choice;
 
 
 
@@ -44,5 +44,6 @@
             return EX2Guided(var, n);
 
     }
+    */
     return EXIT_FAILURE;
 }
