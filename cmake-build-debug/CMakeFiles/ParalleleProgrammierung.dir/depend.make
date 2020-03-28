@@ -3,7 +3,4 @@
 
 CMakeFiles/ParalleleProgrammierung.dir/main.c.o: ../main.c
 CMakeFiles/ParalleleProgrammierung.dir/main.c.o: ../week3/EX2.c
-CMakeFiles/ParalleleProgrammierung.dir/main.c.o: ../week3/EX2Dynamic.c
-CMakeFiles/ParalleleProgrammierung.dir/main.c.o: ../week3/EX2Guided.c
-CMakeFiles/ParalleleProgrammierung.dir/main.c.o: ../week3/EX2Static.c
 

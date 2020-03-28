@@ -19,6 +19,9 @@ $ -j yes
 # Parallel environment for using OpenMP, allocates 8 cores on a single node
 $ -pe openmp 8
 
+# Virtual Storage
+$ -l h_vmen=4G
+
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
 module load openmpi/4.0.1
