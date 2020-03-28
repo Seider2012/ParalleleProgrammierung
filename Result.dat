@@ -1,17 +1,4 @@
   Loading gcc/8.2.0
-  Loading openmpi/4.0.1 for compiler gcc-8.2.0
-/usr/sge/lcc2/spool/n004/job_scripts/49215: line 29: ./home/Parallele/EX2.out: No such file or directory
-  Loading gcc/8.2.0
-  Loading openmpi/4.0.1 for compiler gcc-8.2.0
-/usr/sge/lcc2/spool/n004/job_scripts/49216: line 29: ./home/Parallele/EX2.out: No such file or directory
-  Loading openmpi/4.0.1 for compiler gcc-8.2.0
-/usr/sge/lcc2/spool/n006/job_scripts/49217: line 29: ./Parallele/EX2.out: No such file or directory
-  Loading gcc/8.2.0
-  Loading openmpi/4.0.1 for compiler gcc-8.2.0
-/usr/sge/lcc2/spool/n004/job_scripts/49218: line 29: 17668 Segmentation fault      (core dumped) ./EX2.out
-  Loading gcc/8.2.0
-/usr/sge/lcc2/spool/n004/job_scripts/49219: line 25: ./Parallele/EX2.out: No such file or directory
-  Loading gcc/8.2.0
 hadamard:Row Seq n=10000 
 Work took 0.266481 sec. time.
 hadamard:Col Seq n=10000 
