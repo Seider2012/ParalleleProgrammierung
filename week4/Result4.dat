@@ -1,0 +1,20 @@
+  Loading gcc/8.2.0
+Critical Version:
+PI is 3.141656 
+time= 1648.780000
+Atomic Version:
+PI is 3.141516 
+time= 1465.430000
+Reduction Version:
+PI is 3.141575 
+time= 1091.900000
+  Loading gcc/8.2.0
+Critical Version:
+PI is 3.141676 
+time= 507.366082
+Atomic Version:
+PI is 3.141657 
+time= 444.618068
+Reduction Version:
+PI is 3.141690 
+time= 384.045003
