@@ -6,7 +6,9 @@
 
 int EX1Red() {
     int count = 0;
-    clock_t begin = clock();
+    double start;
+    double end;
+    start = omp_get_wtime();
     #pragma omp parallel
     {
         srand((unsigned) time(NULL) + omp_get_thread_num());
@@ -27,8 +29,8 @@ int EX1Red() {
 
     printf("Reduction Version:\n");
     printf("PI is %Lf \n", pi);
-    clock_t end = clock();
-    printf("time= %f\n", (double) (end - begin) / CLOCKS_PER_SEC);
+    end = omp_get_wtime();
+    printf("time= %f\n", (double) (end - start));
     return EXIT_SUCCESS;
 }
 

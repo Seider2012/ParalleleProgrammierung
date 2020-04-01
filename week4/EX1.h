@@ -12,6 +12,6 @@
 #include <time.h>
 #include <omp.h>
 
-#define DOTS 5000000
+#define DOTS 500000000
 
 #endif //WEEK4_EX1_H

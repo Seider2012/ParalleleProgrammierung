@@ -8,10 +8,10 @@
 
 # Name of your job. Unless you use the -o and -e options, output will
 # go to a unique file name.ojob_id for each job.
-#$ -N Result1
+#$ -N Result8
 
 # Redirect output stream to this file.
-#$ -o Result1.dat
+#$ -o Result8.dat
 
 # Join the error stream to the output stream.
 #$ -j yes
@@ -29,7 +29,4 @@ export OMP_NUM_THREADS=8
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
 
-
-
-
-./EX1.out
+./EX1.out 1
