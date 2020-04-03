@@ -46,7 +46,7 @@ export OMP_NUM_THREADS=8
 ./EX2.out 1500
 ./EX2Spr.out 1500
 ./EX2Clo.out 1500
-export OMP_PLACES=threads(4)
+export OMP_PLACES=cores
 export OMP_NUM_THREADS=1
 ./EX2.out 1500
 ./EX2Spr.out 1500
