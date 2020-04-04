@@ -1,0 +1,32 @@
+  Loading gcc/8.2.0
+res: 35309705, time: 50.79 seconds
+res: 35309705, time: 49.44 seconds
+res: 35309705, time: 50.94 seconds
+res: 2917265427, time: 48.78 seconds
+res: 2272860668, time: 51.56 seconds
+res: 3734417715, time: 48.62 seconds
+res: 407928553, time: 79.90 seconds
+res: 3072948508, time: 54.57 seconds
+res: 628150981, time: 70.30 seconds
+res: 830541962, time: 81.40 seconds
+res: 17630003, time: 59.90 seconds
+res: 2665948775, time: 67.00 seconds
+res: 35309705, time: 50.73 seconds
+res: 35309705, time: 46.90 seconds
+res: 35309705, time: 50.39 seconds
+res: 3598661544, time: 47.72 seconds
+res: 2192161750, time: 50.71 seconds
+res: 113663321, time: 46.30 seconds
+res: 4182957644, time: 64.15 seconds
+res: 3349510581, time: 61.76 seconds
+Error: usage: ./EX2Clo.out <n>
+res: 1467951814, time: 51.00 seconds
+res: 505319584, time: 61.47 seconds
+res: 121903324, time: 66.56 seconds
+  Loading gcc/8.2.0
+res: 3136717975, time: 47.56 seconds
+res: 1686488065, time: 54.71 seconds
+res: 576238919, time: 59.17 seconds
+res: 1575936019, time: 50.81 seconds
+res: 2340207859, time: 64.55 seconds
+res: 1639380025, time: 69.72 seconds

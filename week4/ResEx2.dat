@@ -1,0 +1,15 @@
+  Loading gcc/8.2.0
+res: 35309705, time: 46.96 seconds
+res: 35309705, time: 50.62 seconds
+res: 35309705, time: 49.40 seconds
+res: 1086052573, time: 51.04 seconds
+res: 627718405, time: 50.66 seconds
+res: 113187227, time: 44.89 seconds
+res: 75305000, time: 52.72 seconds
+res: 1803946694, time: 49.56 seconds
+res: 1380548828, time: 55.18 seconds
+res: 2833225994, time: 60.57 seconds
+res: 3685057544, time: 80.36 seconds
+res: 1251668666, time: 56.76 seconds
+/usr/sge/lcc2/spool/n003/job_scripts/52929: line 49: syntax error near unexpected token `('
+/usr/sge/lcc2/spool/n003/job_scripts/52929: line 49: `export OMP_PLACES=threads(4)'
