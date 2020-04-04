@@ -6,7 +6,6 @@
 
 // simples kopieren
 void clone(int32_t *org, int32_t *clone, int n) {
-#pragma omp parallel for
     for (int i = 0; i < n; i++) {
         clone[i] = org[i];
     }
@@ -15,7 +14,6 @@ void clone(int32_t *org, int32_t *clone, int n) {
 // überprüft ob die listen identisch sind
 int equal(int32_t *t1,int32_t *t2,int len){
     int test=0;
-#pragma omp parallel for
     for (int i = 0; i < len; i++) {
         if(t1[i] != t2[i]){
             test=1;
