@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
     double start_time = omp_get_wtime();
 #pragma omp parallel default(none) shared(n, a, b, c, local_res)  proc_bind(spread)
     {
-        // matrix multiplication
+        // matrix multiplication  schedule(static)
 #pragma omp parallel for default(none) shared(n, a, b, c)  proc_bind(spread)
         for ( long i = 0; i < n; ++i) {
             for (long j = 0; j < n; ++j) {
@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
             }
         }
         // sum of matrix c
-#pragma omp parallel for default(none) shared(n, a, b, c, local_res)  proc_bind(spread)
+#pragma omp parallel for default(none) shared(n, a, b, c, local_res) proc_bind(spread)
         for (long i = 0; i < n; ++i) {
             for (long j = 0; j < n; ++j) {
                 local_res[omp_get_thread_num()] += c[i][j];

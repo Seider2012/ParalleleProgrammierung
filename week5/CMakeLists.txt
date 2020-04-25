@@ -1,17 +1,13 @@
 cmake_minimum_required(VERSION 3.15)
-project(week4 C)
+project(week5 C)
 
 #set(CMAKE_C_STANDARD 99)
 # added -fopenmp
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c99 -O0 -fopenmp")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c99 -O3 -fopenmp")
 
-add_executable(main main.c)
-add_executable(EX2 EX2.c)
-add_executable(EX2Clo EX2Clo.c)
-add_executable(EX2Spr EX2Spr.c)
-add_executable(EX3Seq EX3Seq.c)
-add_executable(EX3Par EX3Par.c)
-add_executable(EX2M EX2M.c)
+add_executable(EX1 EX1.c)
+add_executable(EX2Flush flush.c)
+
 
 message(STATUS "Checking OpenMP")
 find_package(OpenMP)
