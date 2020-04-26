@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // überprüft ob die listen identisch sind
-int equal(int32_t *t1,int32_t *t2,int len){
+int equal(int *t1,int *t2,int len){
     int test=0;
     for (int i = 0; i < len; i++) {
         if(t1[i] != t2[i]){
@@ -18,7 +18,7 @@ int compare(const void *a, const void *b){
     return( *(int*)a-*(int*)b);
 }
 
-void merge(int32_t *temp,int32_t *p1, int l1, int32_t *p2, int l2) {
+void merge(int *temp,int *p1, int l1, int *p2, int l2) {
     int x = 0;
     int i = 0;
     int j = 0;
@@ -46,11 +46,11 @@ void merge(int32_t *temp,int32_t *p1, int l1, int32_t *p2, int l2) {
     }
 }
 
-void mergeSortSeq(int32_t *unsorted,int32_t *sorted,int n) {
+void mergeSortSeq(int *unsorted,int *sorted,int n) {
     if (n == 1) {
         sorted[0]=unsorted[0];
     } else {
-        int32_t *temp = (int32_t*)malloc(sizeof(int32_t) * (n));;
+        int *temp = (int*)malloc(sizeof(int) * (n));;
         int d = (n / 2);
 
         mergeSortSeq(unsorted,temp,d);
@@ -76,7 +76,7 @@ int mybsearch(int key,int32_t*base,int n){
 
 }
 
-void P_merge(int32_t *temp,int32_t *p1, int l1, int32_t *p2, int l2) {
+void P_merge(int *temp,int *p1, int l1, int *p2, int l2) {
     if(l1<l2){
         P_merge(temp,p2,l2,p1,l1);
     }else if(l1==0){
@@ -93,11 +93,11 @@ void P_merge(int32_t *temp,int32_t *p1, int l1, int32_t *p2, int l2) {
     }
 }
 
-void mergeSortPar(int32_t *unsorted,int32_t *sorted,int n) {
+void mergeSortPar(int *unsorted,int *sorted,int n) {
     if (n == 1) {
         sorted[0]=unsorted[0];
     } else {
-        int32_t *temp = (int32_t*)malloc(sizeof(int32_t) * (n));;
+        int *temp = (int*)malloc(sizeof(int) * (n));;
         int d = (n / 2);
         //Ausgabe:
 
@@ -121,8 +121,8 @@ int main(int argc, char **argv) {
         choice = strtol(argv[1], &p, 10);
         n = strtol(argv[2], &p, 10);
     }
-    int32_t *unsorted = (int32_t *) malloc(sizeof(int32_t) * n);
-    int32_t *sorted = (int32_t *) malloc(sizeof(int32_t) * n);
+    int *unsorted = (int *) malloc(sizeof(int) * n);
+    int *sorted = (int *) malloc(sizeof(int) * n);
 
     double start_time;
     double end_time;
@@ -160,7 +160,7 @@ int main(int argc, char **argv) {
     printf("%d]\n",sorted[n-1]);
     */
     printf("%s time: %2.4f seconds\n", choice==1?"Seq:":choice==2?"Par:":"None", end_time - start_time);
-    qsort(unsorted,n,sizeof(int32_t),compare);
+    qsort(unsorted,n,sizeof(int),compare);
     if(!equal(unsorted,sorted,n)){
         printf("\nTEST 1 BESTANDEN!\n\n");
     } else{
