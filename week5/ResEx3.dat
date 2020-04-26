@@ -1,0 +1,81 @@
+  Loading gcc/8.2.0
+TEST 1 with n = 5000000: 
+Rec Seq: time: 1.1066 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 10000000: 
+Rec Seq: time: 2.2660 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 15000000: 
+Rec Seq: time: 3.4108 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 20000000: 
+Rec Seq: time: 4.6750 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 5000000: 
+Rec Par: time: 1.1228 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 10000000: 
+Rec Par: time: 2.3096 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 15000000: 
+Rec Par: time: 3.4620 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 20000000: 
+Rec Par: time: 4.7440 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 5000000: 
+Iter Seq: time: 1.6274 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 10000000: 
+Iter Seq: time: 3.3580 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 15000000: 
+Iter Seq: time: 5.1665 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 20000000: 
+Iter Seq: time: 6.9599 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 5000000: 
+Iter Par: time: 0.7368 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 10000000: 
+Iter Par: time: 1.5265 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 15000000: 
+Iter Par: time: 2.2121 seconds
+
+TEST 1 BESTANDEN!
+
+TEST 1 with n = 20000000: 
+Iter Par: time: 3.2835 seconds
+
+TEST 1 BESTANDEN!
+
