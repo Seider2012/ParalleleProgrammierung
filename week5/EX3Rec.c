@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // überprüft ob die listen identisch sind
-int equal(int *t1,int *t2,int len){
+int equal(const int *t1,const int *t2,int len){
     int test=0;
     for (int i = 0; i < len; i++) {
         if(t1[i] != t2[i]){
@@ -14,11 +14,13 @@ int equal(int *t1,int *t2,int len){
     return test;
 }
 
+// simpler comparator für builtin sort
 int compare(const void *a, const void *b){
     return( *(int*)a-*(int*)b);
 }
 
-void merge(int *temp,int *p1, int l1, int *p2, int l2) {
+// normale version von merge für die seq. version von mergesort
+void merge(int *temp,const int *p1, int l1,const int *p2, int l2) {
     int x = 0;
     int i = 0;
     int j = 0;
@@ -45,7 +47,7 @@ void merge(int *temp,int *p1, int l1, int *p2, int l2) {
         x++;
     }
 }
-
+// die seq. version von mergesort
 void mergeSortSeq(int *unsorted,int *sorted,int n) {
     if (n == 1) {
         sorted[0]=unsorted[0];
@@ -61,6 +63,7 @@ void mergeSortSeq(int *unsorted,int *sorted,int n) {
     }
 }
 
+// binarySearch für die par. version von merge
 int mybsearch(int key,int*base,int n){
     if(n==0)return 0;
     if(n==1){
@@ -75,7 +78,7 @@ int mybsearch(int key,int*base,int n){
     }
 
 }
-
+// parallelisierte version von merge für die par. version von mergesort
 void P_merge(int *temp,int *p1, int l1, int *p2, int l2) {
     if(l1<l2){
         P_merge(temp,p2,l2,p1,l1);
@@ -85,14 +88,15 @@ void P_merge(int *temp,int *p1, int l1, int *p2, int l2) {
         int m1 = l1/2;
         int m2 = mybsearch(p1[m1],p2,l2);
         temp[m1+m2]=p1[m1];
-#pragma omp task
+
+#pragma omp task default(none) shared(temp,p1,m1,p2,m2)
         P_merge(temp,p1,m1,p2,m2);
-#pragma omp task
+#pragma omp task default(none) shared(temp,p1,m1,p2,m2,l1,l2)
         P_merge(&temp[m1+m2+1],&p1[m1+1],l1-m1-1,&p2[m2],l2-m2);
 #pragma omp taskwait
     }
 }
-
+//parallelisierte version von MergeSort
 void mergeSortPar(int *unsorted,int *sorted,int n) {
     if (n == 1) {
         sorted[0]=unsorted[0];
@@ -101,10 +105,11 @@ void mergeSortPar(int *unsorted,int *sorted,int n) {
         int d = (n / 2);
         //Ausgabe:
 
-#pragma omp task
-        mergeSortPar(unsorted,temp,d);
-#pragma omp task
-        mergeSortPar(&unsorted[d],&temp[d],n-d);
+#pragma omp task default(none) shared(temp,unsorted,n,d)
+            mergeSortPar(unsorted, temp, d);
+#pragma omp task default(none) shared(temp,unsorted,n,d)
+            mergeSortPar(&unsorted[d], &temp[d], n - d);
+
 #pragma omp taskwait
 
         P_merge(sorted,temp, d, &temp[d], (n - d));
@@ -114,18 +119,19 @@ void mergeSortPar(int *unsorted,int *sorted,int n) {
 
 int main(int argc, char **argv) {
 
-    int n = 10;
-    int choice=1;
+    int n = 10; // größe des arrays
+    int choice=1; // 1..seq, 2..parallel
     if (argc == 3) {
         char *p;
-        choice = strtol(argv[1], &p, 10);
-        n = strtol(argv[2], &p, 10);
+        choice = (int) strtol(argv[1], &p, 10);
+        n = (int) strtol(argv[2], &p, 10);
     }
     int *unsorted = (int *) malloc(sizeof(int) * n);
     int *sorted = (int *) malloc(sizeof(int) * n);
-
     double start_time;
     double end_time;
+
+
     // fill array
     srand(12);
     for (long i = 0; i < n; ++i) {
@@ -134,6 +140,7 @@ int main(int argc, char **argv) {
     }
 
     printf("TEST 1 with n = %d: \n", n);
+
     /*
     printf("mergeSortPar: \n");
     //Ausgabe:
@@ -143,12 +150,13 @@ int main(int argc, char **argv) {
     }
     printf("%d]\n",unsorted[n-1]);
     */
+
     start_time = omp_get_wtime();
     //sort
     if (choice == 1) {
         mergeSortSeq(unsorted, sorted, n);
     } else if(choice==2){
-    mergeSortPar(unsorted, sorted, n);
+     mergeSortPar(unsorted, sorted, n);
     }
     end_time = omp_get_wtime();
 
@@ -159,8 +167,9 @@ int main(int argc, char **argv) {
     }
     printf("%d]\n",sorted[n-1]);
     */
+
     printf("%s time: %2.4f seconds\n", choice==1?"Seq:":choice==2?"Par:":"None", end_time - start_time);
-    qsort(unsorted,n,sizeof(int),compare);
+    qsort(unsorted, (size_t) n, sizeof(int), compare);
     if(!equal(unsorted,sorted,n)){
         printf("\nTEST 1 BESTANDEN!\n\n");
     } else{
