@@ -7,10 +7,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c99 -O3 -fopenmp")
 
 add_executable(EX1 EX1.c)
 add_executable(EX2Flush flush.c)
-add_executable(EX3IterSeq EX3IterSeq.c)
-add_executable(EX3IterPar EX3IterPar.c)
 
-add_executable(EX3Rec EX3Rec.c)
+
+add_executable(EX3 EX3.c)
 message(STATUS "Checking OpenMP")
 find_package(OpenMP)
 IF(OPENMP_FOUND)
