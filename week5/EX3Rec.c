@@ -61,7 +61,7 @@ void mergeSortSeq(int *unsorted,int *sorted,int n) {
     }
 }
 
-int mybsearch(int key,int32_t*base,int n){
+int mybsearch(int key,int*base,int n){
     if(n==0)return 0;
     if(n==1){
         return key<base[0]?0:1;
@@ -83,7 +83,7 @@ void P_merge(int *temp,int *p1, int l1, int *p2, int l2) {
         return;
     }else{
         int m1 = l1/2;
-        int m2 = (int32_t)mybsearch(p1[m1],p2,l2);
+        int m2 = mybsearch(p1[m1],p2,l2);
         temp[m1+m2]=p1[m1];
 #pragma omp task
         P_merge(temp,p1,m1,p2,m2);
