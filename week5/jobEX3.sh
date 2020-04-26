@@ -28,5 +28,20 @@ export OMP_NUM_THREADS=8
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
 gcc -O3 -std=c99 -fopenmp EX3Rec.c -o EX3.out
+./EX3.out 1 5000000
+./EX3.out 2 5000000
+./EX3.out 3 5000000
 ./EX3.out 1 10000000
 ./EX3.out 2 10000000
+./EX3.out 3 10000000
+./EX3.out 1 15000000
+./EX3.out 2 15000000
+./EX3.out 3 15000000
+./EX3.out 1 20000000
+./EX3.out 2 20000000
+./EX3.out 3 20000000
+
+./EX3.out 4 5000000
+./EX3.out 4 10000000
+./EX3.out 4 15000000
+./EX3.out 4 20000000
