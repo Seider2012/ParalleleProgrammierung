@@ -7,7 +7,7 @@
 #define BREAK_EVEN_POINT_MERGE 10000
 
 // kopiert eine Liste
-void clone(int32_t *org, int32_t *clone, int n) {
+void clone(int *org, int *clone, int n) {
     for (int i = 0; i < n; i++) {
         clone[i] = org[i];
     }
@@ -218,7 +218,7 @@ int main(int argc, char **argv) {
     return EXIT_SUCCESS;
 }
 
-void merge_iter(int32_t *base, int off, int l1, int l2);
+void merge_iter(int *base, int off, int l1, int l2);
 
 // Utility function to find minimum of two integers
 int min(int x, int y) { return (x < y) ? x : y; }
@@ -248,13 +248,13 @@ void mergeSortIterPar(int arr[], int n) {
     }
 }
 
-void merge_iter(int32_t *base, int off, int l1, int l2) {
+void merge_iter(int *base, int off, int l1, int l2) {
 
 // Falls l1=0 oder l2 = 0 ist dann muss nicht gemerged werden.
     if (!(l1 == 0 || l2 == 0)) {
-        int32_t *temp1 = (int *) malloc(sizeof(int32_t) * l1);
+        int *temp1 = (int *) malloc(sizeof(int) * l1);
         clone(&base[off], temp1, l1);
-        int32_t *temp2 = (int *) malloc(sizeof(int32_t) * l2);
+        int *temp2 = (int *) malloc(sizeof(int) * l2);
         clone(&base[off + l1], temp2, l2);
         int x = off;
         int i = 0; //für temp1
