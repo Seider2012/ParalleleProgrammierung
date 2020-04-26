@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define BREAK_EVEN_POINT_SORT 1000
+#define BREAK_EVEN_POINT_MERGE 10000
 // überprüft ob die listen identisch sind
 int equal(const int *t1,const int *t2,int len){
     int test=0;
@@ -80,6 +82,10 @@ int mybsearch(int key,int*base,int n){
 }
 // parallelisierte version von merge für die par. version von mergesort
 void P_merge(int *temp,int *p1, int l1, int *p2, int l2) {
+    if(l1+l2<BREAK_EVEN_POINT_MERGE){
+        return merge(temp,p1,l1,p2,l2);
+    }
+
     if(l1<l2){
         P_merge(temp,p2,l2,p1,l1);
     }else if(l1==0){
@@ -99,8 +105,10 @@ void P_merge(int *temp,int *p1, int l1, int *p2, int l2) {
 //parallelisierte version von MergeSort
 void mergeSortPar(int *unsorted,int *sorted,int n) {
     if (n == 1) {
-        sorted[0]=unsorted[0];
-    } else {
+        sorted[0] = unsorted[0];
+    } else if(n<BREAK_EVEN_POINT_SORT){
+        mergeSortSeq(unsorted,sorted,n);
+    }else{
         int *temp = (int*)malloc(sizeof(int) * (n));;
         int d = (n / 2);
         //Ausgabe:
