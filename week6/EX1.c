@@ -12,25 +12,38 @@ int calculateSize(const char *arg){
     struct dirent *pDirent;
     struct stat buffer;
     DIR *pDir;
+    size_t folder_size=0;
     pDir = opendir (arg);
     if (pDir == NULL) {
         fprintf (stderr,"Cannot open directory '%s'\n", arg);
         return -1;
     }
+
+    int cur_size;
     while ((pDirent = readdir(pDir)) != NULL) {
+
+        if(pDirent->d_name[0]=='.')
+            continue;
+
         char *fullpath = malloc(strlen(arg) + strlen(pDirent->d_name) + 2);
         if (fullpath == NULL) { return -1; }
-        sprintf(fullpath, "%s/%s", arg, pDirent->d_name);
-        int size=lstat(fullpath,&buffer);
-        if(size==-1){
+        sprintf(fullpath, "%s\\%s", arg, pDirent->d_name);
+        int stat=lstat(fullpath,&buffer);
+        cur_size=buffer.st_size;
+        if(stat==-1){
             fprintf(stderr, "Error opening file: %s\n", strerror( errno ));
+        }else if(cur_size==0){
+            cur_size=calculateSize(fullpath);
         }
-        printf("[%s] size=%d\n", pDirent->d_name,buffer.st_size);
 
-        // cleanup
+        folder_size+=cur_size;
+        printf("[%s] size=%d\n", pDirent->d_name,cur_size);
+
         free(fullpath);
-        closedir (pDir);
     }
+    // close dir
+    closedir (pDir);
+    return folder_size;
 }
 
 
@@ -51,7 +64,7 @@ int main (int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    printf("size=%d time: %2.4f seconds\n",size,
+    printf("size=%d Bytes time: %2.4f seconds\n",size,
            end_time - start_time);
     return EXIT_SUCCESS;
 }
