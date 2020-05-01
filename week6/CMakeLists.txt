@@ -6,6 +6,8 @@ project(week5 C)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c99 -O3 -fopenmp")
 
 add_executable(EX1 EX1.c)
+add_executable(EX2 heat_stencil_2D.c)
+
 
 message(STATUS "Checking OpenMP")
 find_package(OpenMP)
