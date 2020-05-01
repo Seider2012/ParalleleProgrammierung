@@ -8,10 +8,10 @@
 
 # Name of your job. Unless you use the -o and -e options, output will
 # go to a unique file name.ojob_id for each job.
-#$ -N ResEx3
+#$ -N ResEx2
 
 # Redirect output stream to this file.
-#$ -o ResEx3.dat
+#$ -o ResEx2.dat
 
 # Join the error stream to the output stream.
 #$ -j yes
