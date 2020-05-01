@@ -1,0 +1,49 @@
+  Loading gcc/8.2.0
+Computing heat-distribution for room size 200X200 for T=2000 timesteps
+Verification: OK
+
+Parallel time: 0.8359 seconds
+Computing heat-distribution for room size 200X200 for T=2000 timesteps
+Verification: OK
+
+Parallel time: 0.7337 seconds
+Computing heat-distribution for room size 200X200 for T=2000 timesteps
+Verification: OK
+
+Parallel time: 0.6494 seconds
+Computing heat-distribution for room size 200X200 for T=2000 timesteps
+Verification: OK
+
+Parallel time: 0.6153 seconds
+Computing heat-distribution for room size 500X500 for T=5000 timesteps
+Verification: OK
+
+Parallel time: 15.3426 seconds
+Computing heat-distribution for room size 500X500 for T=5000 timesteps
+Verification: OK
+
+Parallel time: 10.8497 seconds
+Computing heat-distribution for room size 500X500 for T=5000 timesteps
+Verification: OK
+
+Parallel time: 8.2652 seconds
+Computing heat-distribution for room size 500X500 for T=5000 timesteps
+Verification: OK
+
+Parallel time: 7.4694 seconds
+Computing heat-distribution for room size 1000X1000 for T=10000 timesteps
+Verification: OK
+
+Parallel time: 134.5919 seconds
+Computing heat-distribution for room size 1000X1000 for T=10000 timesteps
+Verification: OK
+
+Parallel time: 94.2270 seconds
+Computing heat-distribution for room size 1000X1000 for T=10000 timesteps
+Verification: OK
+
+Parallel time: 73.1600 seconds
+Computing heat-distribution for room size 1000X1000 for T=10000 timesteps
+Verification: OK
+
+Parallel time: 64.1997 seconds
