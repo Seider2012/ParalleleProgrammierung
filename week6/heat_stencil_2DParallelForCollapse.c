@@ -51,10 +51,13 @@ int main(int argc, char **argv) {
     int source_y = N / 4;
     A[IND(source_x,source_y)] = 273 + 60;
 
+    //commented
+    /*
     printf("Initial:\n");
     printTemperature(A, N, N);
     printf("\n");
 
+     */
     // ---------- compute ----------
 
     // create a second buffer for the computation
@@ -72,6 +75,7 @@ int main(int argc, char **argv) {
         // todo make sure the heat source stays the same
         memcpy(B,A,sizeof(double) * N * N);
 // A[] und B[]
+#pragma omp parallel for schedule(static) shared(A,B) collapse(2)
         for(int i=0;i<N;i++){
             for(int j=0;j<N;j++){
                 A[IND(i,j)]=0.20*(B[IND(i,j)]+B[IND((i+1==N)?i:i+1,j)]+B[IND((i>0)?i-1:i,j)]+B[IND(i,(j>0)?j-1:j)]+B[IND(i,(j+1==N)?j:j+1)]);
@@ -81,19 +85,24 @@ int main(int argc, char **argv) {
 // DONE make sure the heat source stays the same
         A[IND(source_x,source_y)] = 273 + 60;
         // every 1000 steps show intermediate step
+        //commented
+        /*
         if (!(t % 1000)) {
             printf("Step t=%d\n", t);
             printTemperature(A, N, N);
             printf("\n");
-        }
+        }*/
     }
     end_time = omp_get_wtime();
 
     // ---------- check ----------
 
+    //commented
+    /*
     printf("Final:\n");
     printTemperature(A, N, N);
     printf("\n");
+     */
 
     // simple verification if nowhere the heat is more then the heat source
     int success = 1;
