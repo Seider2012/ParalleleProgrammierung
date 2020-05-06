@@ -51,13 +51,11 @@ int main(int argc, char **argv) {
     int source_y = N / 4;
     A[IND(source_x,source_y)] = 273 + 60;
 
-    //commented
-    /*
+
     printf("Initial:\n");
     printTemperature(A, N, N);
     printf("\n");
 
-     */
     // ---------- compute ----------
 
     // create a second buffer for the computation
@@ -85,24 +83,21 @@ int main(int argc, char **argv) {
 // DONE make sure the heat source stays the same
         A[IND(source_x,source_y)] = 273 + 60;
         // every 1000 steps show intermediate step
-        //commented
-        /*
         if (!(t % 1000)) {
             printf("Step t=%d\n", t);
             printTemperature(A, N, N);
             printf("\n");
-        }*/
+        }
     }
     end_time = omp_get_wtime();
 
     // ---------- check ----------
 
-    //commented
-    /*
+
     printf("Final:\n");
     printTemperature(A, N, N);
     printf("\n");
-     */
+
 
     // simple verification if nowhere the heat is more then the heat source
     int success = 1;
