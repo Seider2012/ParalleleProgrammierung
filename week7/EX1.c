@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int32_t *calSeqPrefixSums(const int32_t *array, size_t size) {
-    int32_t *result = malloc(sizeof(int32_t) * size);
+int *calSeqPrefixSums(const int *array, size_t size) {
+    int *result = malloc(sizeof(int) * size);
 
     result[0] = 0;
     for (int i = 1; i < size; i++) {
@@ -15,35 +15,35 @@ int32_t *calSeqPrefixSums(const int32_t *array, size_t size) {
     return result;
 }
 
-int32_t *calParTaskPrefixSums(const int32_t *array, size_t size) {
-    int32_t *result = malloc(sizeof(int32_t) * size);
+int *calParTaskPrefixSums(const int *array, size_t size) {
+    int *result = malloc(sizeof(int) * size);
 
 #pragma omp parallel shared(result,array,size)
 #pragma omp single
     {
 
 #pragma omp task depend(out:result[0])
-    {
-        result[0] = 0;
-    }
-    for (int i = 1; i < size; i++) {
-#pragma omp task depend(in:result[i-1]) depend(out:result[i])
         {
-            result[i] = result[i - 1] + array[i - 1];
+            result[0] = 0;
         }
-    }
+        for (int i = 1; i < size; i++) {
+#pragma omp task depend(in:result[i-1]) depend(out:result[i])
+            {
+                result[i] = result[i - 1] + array[i - 1];
+            }
+        }
 
 #pragma omp taskwait
     }
     return result;
 }
 
-int32_t *calParCheatPrefixSums(const int32_t *array, size_t size) {
-    int32_t result =0;
+int *calParCheatPrefixSums(const int *array, size_t size) {
+    int result =0;
 #pragma omp parallel for reduction(+:result)
-        for (int i = 1; i < size; i++) {
-                result+= array[i-1];
-        }
+    for (int i = 1; i < size; i++) {
+        result+= array[i-1];
+    }
     return result;
 }
 
@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
         n = (size_t) strtol(argv[1], &p, 10);
     }
 
-    int32_t *array = malloc(sizeof(int32_t) * n);
-    int32_t *prefixSums;
+    int *array = malloc(sizeof(int) * n);
+    int *prefixSums;
 
     // fill array
     //srand(12);

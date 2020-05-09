@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MINIMUM_REMAINING_ROWS 8
 
 int no_attack(int x1, int y1, int x2, int y2) {
     if (x1 == x2)
@@ -27,7 +28,7 @@ int conflict(int *queens, int pos) {
     return 0;
 }
 
-int32_t calSeqSol(int pos_row, size_t n, int queens[n * 2]) {
+int calSeqSol(int pos_row, size_t n, int queens[n * 2]) {
     if (pos_row == n) {
         return 1;
     } else {
@@ -47,7 +48,7 @@ int32_t calSeqSol(int pos_row, size_t n, int queens[n * 2]) {
 }
 
 
-int32_t calParSol(int pos_row, size_t n,int queens[n * 2]) {
+int calParSol(int pos_row, size_t n,int queens[n * 2]) {
     if (pos_row == n) {
         return 1;
     } else {
@@ -58,7 +59,7 @@ int32_t calParSol(int pos_row, size_t n,int queens[n * 2]) {
             if (!conflict(queens, pos_row * 2 + 2)) {
                 int *local= malloc(sizeof(int)*2*n);
                 local=memcpy(local,queens,n*2*sizeof(int));
-                if(n-pos_row<7)
+                if(n-pos_row<MINIMUM_REMAINING_ROWS)
 #pragma omp atomic
                     sols += calSeqSol(pos_row + 1, n, local);
                 else{
@@ -89,7 +90,7 @@ int main(int argc, char *argv[]) {
         n = (size_t) strtol(argv[1], &p, 10);
     }
 
-    int32_t solutions = 0;
+    int solutions = 0;
     int *queens = malloc(sizeof(int) * n * 2);
 
     start_time = omp_get_wtime();
