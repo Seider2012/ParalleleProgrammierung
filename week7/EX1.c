@@ -58,17 +58,22 @@ int *calParSubPrefixSums(const int *array, size_t size) {
     for(int i =1;i<pthreads;i++){
         startpoints[i]= size/pthreads+startpoints[i-1];
     }
-#pragma omp parallel shared(result,array,size)
+#pragma omp parallel shared(result,array,size,startpoints,pthreads)
 #pragma omp single
     {
         for (int i = 0; i < pthreads; i++) {
-#pragma omp task
+            result[startpoints[i]]=0;
+#pragma omp task private(i)
             {
+                int i=omp_get_thread_num();
                 for (int j = 1; j < startpoints[i]; j++) {
                     result[startpoints[i]]+= array[j-1];
                 }
-                for (int j = startpoints[i]; j < ((i+1==pthreads)?size:(startpoints[i+1])); j++)
-                result[j] = result[j - 1] + array[j - 1];
+                for (int j = startpoints[i]+1; j < ((i+1==pthreads)?size:(startpoints[i+1])); j++){
+                    result[j] = result[j - 1] + array[j - 1];
+                   // printf("%d\n",result[j]);
+                };
+                printf("%d %d\n",result[startpoints[i]],i);
             }
         }
 #pragma omp taskwait
