@@ -23,7 +23,7 @@
 
 
 # Set up any environment variables
-export OMP_NUM_THREADS=8
+#export OMP_NUM_THREADS=8
 
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
