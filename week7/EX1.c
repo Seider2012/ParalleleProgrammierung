@@ -47,6 +47,35 @@ int *calParCheatPrefixSums(const int *array, size_t size) {
     return result;
 }
 
+int *calParSubPrefixSums(const int *array, size_t size) {
+
+    int pthreads= omp_get_max_threads();
+    int *result = (int *) malloc(sizeof(int) * size);
+
+    int *startpoints = (int *) malloc(sizeof(int) * pthreads);
+    startpoints[0]=0;
+
+    for(int i =1;i<pthreads;i++){
+        startpoints[i]= size/pthreads+startpoints[i-1];
+    }
+#pragma omp parallel shared(result,array,size)
+#pragma omp single
+    {
+        for (int i = 0; i < pthreads; i++) {
+#pragma omp task
+            {
+                for (int j = 1; j < startpoints[i]; j++) {
+                    result[startpoints[i]]+= array[j-1];
+                }
+                for (int j = startpoints[i]; j < ((i+1==pthreads)?size:(startpoints[i+1])); j++)
+                result[j] = result[j - 1] + array[j - 1];
+            }
+        }
+#pragma omp taskwait
+    }
+    return result;
+}
+
 int main(int argc, char *argv[]) {
 
     double start_time;
@@ -75,7 +104,7 @@ int main(int argc, char *argv[]) {
     //clean up
     free(prefixSums);
 
-
+/*
     start_time = omp_get_wtime();
     prefixSums = calParTaskPrefixSums(array, n);
     end_time = omp_get_wtime();
@@ -87,10 +116,18 @@ int main(int argc, char *argv[]) {
     int sum = calParCheatPrefixSums(array, n);
     end_time = omp_get_wtime();
 
-    printf("Parallel Task time: %2.4f seconds, last value: %d\n", end_time - start_time, sum);
+    printf("Parallel Cheat time: %2.4f seconds, last value: %d\n", end_time - start_time, sum);
+*/
+    start_time = omp_get_wtime();
+    prefixSums = calParSubPrefixSums(array, n);
+    end_time = omp_get_wtime();
+
+    printf("Parallel Sub time: %2.4f seconds, last value: %d\n", end_time - start_time, prefixSums[n-1]);
+
 
     //clean up
     free(array);
+    free(prefixSums);
 
     return EXIT_SUCCESS;
 }
