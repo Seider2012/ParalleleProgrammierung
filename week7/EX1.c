@@ -14,7 +14,7 @@ int *calSeqPrefixSums(const int *array, size_t size) {
 
     return result;
 }
-
+/*
 int *calParTaskPrefixSums(const int *array, size_t size) {
     int *result = malloc(sizeof(int) * size);
 
@@ -46,7 +46,7 @@ int *calParCheatPrefixSums(const int *array, size_t size) {
     }
     return result;
 }
-
+*/
 int *calParSubPrefixSums(const int *array, size_t size) {
 
     int pthreads= omp_get_max_threads();
