@@ -16,5 +16,8 @@ clean:
 .PHONEY: run
 run: all
 	@echo "Sequential:"
-	@./real
+	@/usr/bin/time -v ./real 0
+	@echo
+	@echo "Parallel:"
+	@/usr/bin/time -v ./real 1
 	@echo

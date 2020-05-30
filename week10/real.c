@@ -8,7 +8,7 @@
 #include "timers.h"
 #include "print_results.h"
 
-#define PARALLEL_FLAG 1
+int parFlage =0;
 
 static void setup(int *n1, int *n2, int *n3);
 
@@ -64,7 +64,11 @@ static int is1, is2, is3, ie1, ie2, ie3;
 double starts[NM];
 
 
-int main() {
+int main(int argc, void** argv) {
+    if(argc ==2){
+        char **p;
+        parFlage = (int) strtol(argv[1],p,10);
+    }
     //-------------------------------------------------------------------------c
     // k is the current level. It is passed down through subroutine args
     // and is NOT global. it is the current iteration
@@ -457,7 +461,7 @@ static void mg3P(double u[], double v[], double r[],
 //---------------------------------------------------------------------
 static void psinv(void *or, void *ou, int n1, int n2, int n3,
                   double c[4], int k) {
-    if (PARALLEL_FLAG) {
+    if (parFlage) {
 
         double (*r)[n2][n1] = (double (*)[n2][n1]) or;
         double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
@@ -576,7 +580,7 @@ static void psinv(void *or, void *ou, int n1, int n2, int n3,
 //---------------------------------------------------------------------
 static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
                   double a[4], int k) {
-    if (PARALLEL_FLAG) {
+    if (parFlage) {
         double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
         double (*v)[n2][n1] = (double (*)[n2][n1]) ov;
         double (*r)[n2][n1] = (double (*)[n2][n1]) or;
