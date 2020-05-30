@@ -8,7 +8,7 @@
 #include "timers.h"
 #include "print_results.h"
 
-#define PARALLEL_FLAG true
+#define PARALLEL_FLAG 1
 
 static void setup(int *n1, int *n2, int *n3);
 
@@ -518,7 +518,7 @@ static void psinv(void *or, void *ou, int n1, int n2, int n3,
 //---------------------------------------------------------------------
 static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
                   double a[4], int k) {
-    if (PARALLEL_FLAG) {
+    if (PARALLEL_FLAG&& n3 >500) {
 
         double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
         double (*v)[n2][n1] = (double (*)[n2][n1]) ov;
