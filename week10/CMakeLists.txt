@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.15)
-project(week5 C)
+project(week10)
 
 #set(CMAKE_C_STANDARD 99)
 # added -fopenmp
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c99 -O3 -g3 -lm -fopenmp")
 
-add_executable(real real.c)
+
+add_executable(real c_timers.c print_results.c randdp.c wtime.c real.c)
 
 
 message(STATUS "Checking OpenMP")
