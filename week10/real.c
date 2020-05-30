@@ -457,49 +457,107 @@ static void mg3P(double u[], double v[], double r[],
 //---------------------------------------------------------------------
 static void psinv(void *or, void *ou, int n1, int n2, int n3,
                   double c[4], int k) {
-    double (*r)[n2][n1] = (double (*)[n2][n1]) or;
-    double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
+    if (PARALLEL_FLAG) {
 
-    int i3, i2, i1;
+        double (*r)[n2][n1] = (double (*)[n2][n1]) or;
+        double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
 
-    double r1[M], r2[M];
+        int i3, i2, i1;
 
-    if (timeron) timer_start(T_psinv);
-    for (i3 = 1; i3 < n3 - 1; i3++) {
-        for (i2 = 1; i2 < n2 - 1; i2++) {
-            for (i1 = 0; i1 < n1; i1++) {
-                r1[i1] = r[i3][i2 - 1][i1] + r[i3][i2 + 1][i1]
-                         + r[i3 - 1][i2][i1] + r[i3 + 1][i2][i1];
-                r2[i1] = r[i3 - 1][i2 - 1][i1] + r[i3 - 1][i2 + 1][i1]
-                         + r[i3 + 1][i2 - 1][i1] + r[i3 + 1][i2 + 1][i1];
-            }
-            for (i1 = 1; i1 < n1 - 1; i1++) {
-                u[i3][i2][i1] = u[i3][i2][i1]
-                                + c[0] * r[i3][i2][i1]
-                                + c[1] * (r[i3][i2][i1 - 1] + r[i3][i2][i1 + 1]
-                                          + r1[i1])
-                                + c[2] * (r2[i1] + r1[i1 - 1] + r1[i1 + 1]);
-                //--------------------------------------------------------------------
-                // Assume c[3] = 0    (Enable line below if c[3] not= 0)
-                //--------------------------------------------------------------------
-                //            + c[3] * ( r2[i1-1] + r2[i1+1] )
-                //--------------------------------------------------------------------
+        double r1[M], r2[M];
+
+        if (timeron) timer_start(T_psinv);
+#pragma omp parallel for private(r1, r2) collapse(2)
+        for (i3 = 1; i3 < n3 - 1; i3++) {
+            for (i2 = 1; i2 < n2 - 1; i2++) {
+                r1[0] = r[i3][i2 - 1][0] + r[i3][i2 + 1][0]
+                         + r[i3 - 1][i2][0] + r[i3 + 1][i2][0];
+                r2[0] = r[i3 - 1][i2 - 1][0] + r[i3 - 1][i2 + 1][0]
+                         + r[i3 + 1][i2 - 1][0] + r[i3 + 1][i2 + 1][0];
+                r1[1] = r[i3][i2 - 1][1] + r[i3][i2 + 1][1]
+                         + r[i3 - 1][i2][1] + r[i3 + 1][i2][1];
+                r2[1] = r[i3 - 1][i2 - 1][1] + r[i3 - 1][i2 + 1][1]
+                         + r[i3 + 1][i2 - 1][1] + r[i3 + 1][i2 + 1][1];
+                for (i1 = 1; i1 < n1-1; i1++) {
+                    int buffer = i1 + 1;
+                    r1[buffer] = r[i3][i2 - 1][buffer] + r[i3][i2 + 1][buffer]
+                             + r[i3 - 1][i2][buffer] + r[i3 + 1][i2][buffer];
+                    r2[buffer] = r[i3 - 1][i2 - 1][buffer] + r[i3 - 1][i2 + 1][buffer]
+                             + r[i3 + 1][i2 - 1][buffer] + r[i3 + 1][i2 + 1][buffer];
+                    u[i3][i2][i1] = u[i3][i2][i1]
+                                    + c[0] * r[i3][i2][i1]
+                                    + c[1] * (r[i3][i2][i1 - 1] + r[i3][i2][i1 + 1]
+                                              + r1[i1])
+                                    + c[2] * (r2[i1] + r1[i1 - 1] + r1[i1 + 1])
+                                    + c[3] * (r2[i1 - 1] + r2[i1 + 1]);
+                    //--------------------------------------------------------------------
+                    // Assume c[3] = 0    (Enable line below if c[3] not= 0)
+                    //--------------------------------------------------------------------
+                    //            + c[3] * ( r2[i1-1] + r2[i1+1] )
+                    //--------------------------------------------------------------------
+                }
             }
         }
-    }
-    if (timeron) timer_stop(T_psinv);
+        if (timeron) timer_stop(T_psinv);
 
-    //---------------------------------------------------------------------
-    // exchange boundary points
-    //---------------------------------------------------------------------
-    comm3(u, n1, n2, n3, k);
+        //---------------------------------------------------------------------
+        // exchange boundary points
+        //---------------------------------------------------------------------
+        comm3(u, n1, n2, n3, k);
 
-    if (debug_vec[0] >= 1) {
-        rep_nrm(u, n1, n2, n3, "   psinv", k);
-    }
+        if (debug_vec[0] >= 1) {
+            rep_nrm(u, n1, n2, n3, "   psinv", k);
+        }
 
-    if (debug_vec[3] >= k) {
-        showall(u, n1, n2, n3);
+        if (debug_vec[3] >= k) {
+            showall(u, n1, n2, n3);
+        }
+    }else{
+
+        double (*r)[n2][n1] = (double (*)[n2][n1]) or;
+        double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
+
+        int i3, i2, i1;
+
+        double r1[M], r2[M];
+
+        if (timeron) timer_start(T_psinv);
+        for (i3 = 1; i3 < n3 - 1; i3++) {
+            for (i2 = 1; i2 < n2 - 1; i2++) {
+                for (i1 = 0; i1 < n1; i1++) {
+                    r1[i1] = r[i3][i2 - 1][i1] + r[i3][i2 + 1][i1]
+                             + r[i3 - 1][i2][i1] + r[i3 + 1][i2][i1];
+                    r2[i1] = r[i3 - 1][i2 - 1][i1] + r[i3 - 1][i2 + 1][i1]
+                             + r[i3 + 1][i2 - 1][i1] + r[i3 + 1][i2 + 1][i1];
+                }
+                for (i1 = 1; i1 < n1 - 1; i1++) {
+                    u[i3][i2][i1] = u[i3][i2][i1]
+                                    + c[0] * r[i3][i2][i1]
+                                    + c[1] * (r[i3][i2][i1 - 1] + r[i3][i2][i1 + 1]
+                                              + r1[i1])
+                                    + c[2] * (r2[i1] + r1[i1 - 1] + r1[i1 + 1]);
+                    //--------------------------------------------------------------------
+                    // Assume c[3] = 0    (Enable line below if c[3] not= 0)
+                    //--------------------------------------------------------------------
+                    //            + c[3] * ( r2[i1-1] + r2[i1+1] )
+                    //--------------------------------------------------------------------
+                }
+            }
+        }
+        if (timeron) timer_stop(T_psinv);
+
+        //---------------------------------------------------------------------
+        // exchange boundary points
+        //---------------------------------------------------------------------
+        comm3(u, n1, n2, n3, k);
+
+        if (debug_vec[0] >= 1) {
+            rep_nrm(u, n1, n2, n3, "   psinv", k);
+        }
+
+        if (debug_vec[3] >= k) {
+            showall(u, n1, n2, n3);
+        }
     }
 }
 
@@ -518,8 +576,7 @@ static void psinv(void *or, void *ou, int n1, int n2, int n3,
 //---------------------------------------------------------------------
 static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
                   double a[4], int k) {
-    if (PARALLEL_FLAG&& n3 >500) {
-
+    if (PARALLEL_FLAG) {
         double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
         double (*v)[n2][n1] = (double (*)[n2][n1]) ov;
         double (*r)[n2][n1] = (double (*)[n2][n1]) or;
@@ -528,171 +585,40 @@ static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
         double u1[M], u2[M];
 
         if (timeron) timer_start(T_resid);
-        if (a[0]) {
-            if (a[2]) {
-                if (a[3]) {
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-#pragma omp parallel for schedule(static)
-                            for (i1 = 0; i1 < n1; i1++) {
-                                u1[i1] = u[i3][i2 - 1][i1] + u[i3][i2 + 1][i1]
-                                         + u[i3 - 1][i2][i1] + u[i3 + 1][i2][i1];
-                                u2[i1] = u[i3 - 1][i2 - 1][i1] + u[i3 - 1][i2 + 1][i1]
-                                         + u[i3 + 1][i2 - 1][i1] + u[i3 + 1][i2 + 1][i1];
-                            }
-#pragma omp parallel for schedule(static)
-                            for (i1 = 2; i1 < n1; i1++) {
-                                r[i3][i2][i1 - 1] = v[i3][i2][i1 - 1]
-                                                    - a[0] * u[i3][i2][i1 - 1]
-                                                    //-------------------------------------------------------------------
-                                                    //  Assume a[1] = 0      (Enable 2 lines below if a[1] not= 0)
-                                                    //-------------------------------------------------------------------
-                                                    //            - a[1] * ( u[i3][i2][i1-2] + u[i3][i2][i1]
-                                                    //                     + u1[i1-1] )
-                                                    //-------------------------------------------------------------------
-                                                    - a[2] * (u2[i1 - 1] + u1[i1 - 2] + u1[i1])
-                                                    - a[3] * (u2[i1 - 2] + u2[i1]);
-                            }
-                        }
-                    }
-                } else{
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-#pragma omp parallel for schedule(static)
-                            for (i1 = 0; i1 < n1; i1++) {
-                                u1[i1] = u[i3][i2 - 1][i1] + u[i3][i2 + 1][i1]
-                                         + u[i3 - 1][i2][i1] + u[i3 + 1][i2][i1];
-                                u2[i1] = u[i3 - 1][i2 - 1][i1] + u[i3 - 1][i2 + 1][i1]
-                                         + u[i3 + 1][i2 - 1][i1] + u[i3 + 1][i2 + 1][i1];
-                            }
-#pragma omp parallel for schedule(static)
-                            for (i1 = 2; i1 < n1; i1++) {
-                                r[i3][i2][i1 - 1] = v[i3][i2][i1 - 1]
-                                                    - a[0] * u[i3][i2][i1 - 1]
-                                                    //-------------------------------------------------------------------
-                                                    //  Assume a[1] = 0      (Enable 2 lines below if a[1] not= 0)
-                                                    //-------------------------------------------------------------------
-                                                    //            - a[1] * ( u[i3][i2][i1-2] + u[i3][i2][i1]
-                                                    //                     + u1[i1-1] )
-                                                    //-------------------------------------------------------------------
-                                                    - a[2] * (u2[i1 - 1] + u1[i1 - 2] + u1[i1]);
-                            }
-                        }
-                    }
-                }
-            } else{
-                if (a[3]) {
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-#pragma omp parallel for schedule(static)
-                            for (i1 = 0; i1 < n1; i1++) {
-                                u1[i1] = u[i3][i2 - 1][i1] + u[i3][i2 + 1][i1]
-                                         + u[i3 - 1][i2][i1] + u[i3 + 1][i2][i1];
-                                u2[i1] = u[i3 - 1][i2 - 1][i1] + u[i3 - 1][i2 + 1][i1]
-                                         + u[i3 + 1][i2 - 1][i1] + u[i3 + 1][i2 + 1][i1];
-                            }
-#pragma omp parallel for schedule(static)
-                            for (i1 = 2; i1 < n1; i1++) {
-                                r[i3][i2][i1 - 1] = v[i3][i2][i1 - 1]
-                                                    - a[0] * u[i3][i2][i1 - 1]
-                                                    //-------------------------------------------------------------------
-                                                    //  Assume a[1] = 0      (Enable 2 lines below if a[1] not= 0)
-                                                    //-------------------------------------------------------------------
-                                                    //            - a[1] * ( u[i3][i2][i1-2] + u[i3][i2][i1]
-                                                    //                     + u1[i1-1] )
-                                                    //-------------------------------------------------------------------
-                                                    - a[3] * (u2[i1 - 2] + u2[i1]);
-                            }
-                        }
-                    }
-                } else{
-#pragma omp parallel for schedule(static) collapse(3)
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-                            for (i1 = 2; i1 < n1; i1++) {
-                                r[i3][i2][i1 - 1] = v[i3][i2][i1 - 1]
-                                                    - a[0] * u[i3][i2][i1 - 1];
-                            }
-                        }
+        if(a[1]>-0.0001&&a[1]<0.0001&&a[2]>-0.0001&&a[2]<0.0001&&a[3]>-0.0001&&a[3]<0.0001){
+            printf("%f   ,%f   ",a[2],a[3]);
+#pragma omp parallel for collapse(3)
+            for (i3 = 1; i3 < n3 - 1; i3++) {
+                for (i2 = 1; i2 < n2 - 1; i2++) {
+                    for (i1 = 1; i1 < n1 - 1; i1++) {
+                        r[i3][i2][i1] = v[i3][i2][i1]
+                                -a[0] * u[i3][i2][i1];
                     }
                 }
             }
-        } else {
-            if (a[2]) {
-                if (a[3]) {
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-#pragma omp parallel for schedule(static)
-                            for (i1 = 0; i1 < n1; i1++) {
-                                u1[i1] = u[i3][i2 - 1][i1] + u[i3][i2 + 1][i1]
-                                         + u[i3 - 1][i2][i1] + u[i3 + 1][i2][i1];
-                                u2[i1] = u[i3 - 1][i2 - 1][i1] + u[i3 - 1][i2 + 1][i1]
-                                         + u[i3 + 1][i2 - 1][i1] + u[i3 + 1][i2 + 1][i1];
-                            }
-#pragma omp parallel for schedule(static)
-                            for (i1 = 2; i1 < n1; i1++) {
-                                r[i3][i2][i1 - 1] = v[i3][i2][i1 - 1]
-                                                    - a[2] * (u2[i1 - 1] + u1[i1 - 2] + u1[i1])
-                                                    - a[3] * (u2[i1 - 2] + u2[i1]);
-                            }
-                        }
-                    }
-                }
-                else{
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-#pragma omp parallel for schedule(static)
-                            for (i1 = 0; i1 < n1; i1++) {
-                                u1[i1] = u[i3][i2 - 1][i1] + u[i3][i2 + 1][i1]
-                                         + u[i3 - 1][i2][i1] + u[i3 + 1][i2][i1];
-                                u2[i1] = u[i3 - 1][i2 - 1][i1] + u[i3 - 1][i2 + 1][i1]
-                                         + u[i3 + 1][i2 - 1][i1] + u[i3 + 1][i2 + 1][i1];
-                            }
-#pragma omp parallel for schedule(static)
-                            for (i1 = 2; i1 < n1; i1++) {
-                                r[i3][i2][i1 - 1] = v[i3][i2][i1 - 1]
-
-                                                    //-------------------------------------------------------------------
-                                                    //  Assume a[1] = 0      (Enable 2 lines below if a[1] not= 0)
-                                                    //-------------------------------------------------------------------
-                                                    //            - a[1] * ( u[i3][i2][i1-2] + u[i3][i2][i1]
-                                                    //                     + u1[i1-1] )
-                                                    //-------------------------------------------------------------------
-                                                    - a[2] * (u2[i1 - 1] + u1[i1 - 2] + u1[i1]);
-                            }
-                        }
-                    }
-                }
-            } else{
-                if (a[3]) {
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-#pragma omp parallel for schedule(static)
-                            for (i1 = 0; i1 < n1; i1++) {
-                                u2[i1] = u[i3 - 1][i2 - 1][i1] + u[i3 - 1][i2 + 1][i1]
-                                         + u[i3 + 1][i2 - 1][i1] + u[i3 + 1][i2 + 1][i1];
-                            }
-#pragma omp parallel for schedule(static)
-                            for (i1 = 2; i1 < n1; i1++) {
-                                r[i3][i2][i1 - 1] = v[i3][i2][i1 - 1]
-                                                    //-------------------------------------------------------------------
-                                                    //  Assume a[1] = 0      (Enable 2 lines below if a[1] not= 0)
-                                                    //-------------------------------------------------------------------
-                                                    //            - a[1] * ( u[i3][i2][i1-2] + u[i3][i2][i1]
-                                                    //                     + u1[i1-1] )
-                                                    //-------------------------------------------------------------------
-                                                    - a[3] * (u2[i1 - 2] + u2[i1]);
-                            }
-                        }
-                    }
-                } else{
-#pragma omp parallel for schedule(static) collapse(3)
-                    for (i3 = 1; i3 < n3 - 1; i3++) {
-                        for (i2 = 1; i2 < n2 - 1; i2++) {
-                            for (i1 = 1; i1 < n1-1; i1++) {
-                                r[i3][i2][i1] = v[i3][i2][i1];
-                            }
-                        }
+        }  else {
+#pragma omp parallel for private(u1, u2) collapse(2)
+            for (i3 = 1; i3 < n3 - 1; i3++) {
+                for (i2 = 1; i2 < n2 - 1; i2++) {
+                    u1[0] = u[i3][i2 - 1][0] + u[i3][i2 + 1][0]
+                            + u[i3 - 1][i2][0] + u[i3 + 1][i2][0];
+                    u2[0] = u[i3 - 1][i2 - 1][0] + u[i3 - 1][i2 + 1][0]
+                            + u[i3 + 1][i2 - 1][0] + u[i3 + 1][i2 + 1][0];
+                    u1[1] = u[i3][i2 - 1][1] + u[i3][i2 + 1][1]
+                            + u[i3 - 1][i2][1] + u[i3 + 1][i2][1];
+                    u2[1] = u[i3 - 1][i2 - 1][1] + u[i3 - 1][i2 + 1][1]
+                            + u[i3 + 1][i2 - 1][1] + u[i3 + 1][i2 + 1][1];
+                    for (i1 = 1; i1 < n1 - 1; i1++) {
+                        int buffer = i1 + 1;
+                        u1[buffer] = u[i3][i2 - 1][buffer] + u[i3][i2 + 1][buffer]
+                                     + u[i3 - 1][i2][buffer] + u[i3 + 1][i2][buffer];
+                        u2[buffer] = u[i3 - 1][i2 - 1][buffer] + u[i3 - 1][i2 + 1][buffer]
+                                     + u[i3 + 1][i2 - 1][buffer] + u[i3 + 1][i2 + 1][buffer];
+                        r[i3][i2][i1] = v[i3][i2][i1]
+                                        - a[0] * u[i3][i2][i1]
+                                        - a[1] * ( u[i3][i2][i1-1] + u[i3][i2][i1+1] + u1[i1] )
+                                        - a[2] * (u2[i1] + u1[i1 - 1] + u1[i1 + 1])
+                                        - a[3] * (u2[i1 - 1] + u2[i1 + 1]);
                     }
                 }
             }
