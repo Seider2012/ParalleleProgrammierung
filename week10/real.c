@@ -8,7 +8,7 @@
 #include "timers.h"
 #include "print_results.h"
 
-int parFlage =0;
+int parFlag =1;
 
 static void setup(int *n1, int *n2, int *n3);
 
@@ -67,7 +67,7 @@ double starts[NM];
 int main(int argc, void** argv) {
     if(argc ==2){
         char **p;
-        parFlage = (int) strtol(argv[1],p,10);
+        parFlag = (int) strtol(argv[1], p, 10);
     }
     //-------------------------------------------------------------------------c
     // k is the current level. It is passed down through subroutine args
@@ -461,7 +461,7 @@ static void mg3P(double u[], double v[], double r[],
 //---------------------------------------------------------------------
 static void psinv(void *or, void *ou, int n1, int n2, int n3,
                   double c[4], int k) {
-    if (parFlage) {
+    if (parFlag) {
 
         double (*r)[n2][n1] = (double (*)[n2][n1]) or;
         double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
@@ -580,7 +580,7 @@ static void psinv(void *or, void *ou, int n1, int n2, int n3,
 //---------------------------------------------------------------------
 static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
                   double a[4], int k) {
-    if (parFlage) {
+    if (parFlag) {
         double (*u)[n2][n1] = (double (*)[n2][n1]) ou;
         double (*v)[n2][n1] = (double (*)[n2][n1]) ov;
         double (*r)[n2][n1] = (double (*)[n2][n1]) or;
@@ -727,33 +727,34 @@ static void rprj3(void *or, int m1k, int m2k, int m3k,
     } else {
         d3 = 1;
     }
-
+    i3 = 2  - d3;
     for (j3 = 1; j3 < m3j - 1; j3++) {
-        i3 = 2 * j3 - d3;
+        i2 = 2  - d2;
         for (j2 = 1; j2 < m2j - 1; j2++) {
-            i2 = 2 * j2 - d2;
-
+            i1 = 2 - d1;
             for (j1 = 1; j1 < m1j; j1++) {
-                i1 = 2 * j1 - d1;
-                x1[i1] = r[i3 + 1][i2][i1] + r[i3 + 1][i2 + 2][i1]
-                         + r[i3][i2 + 1][i1] + r[i3 + 2][i2 + 1][i1];
-                y1[i1] = r[i3][i2][i1] + r[i3 + 2][i2][i1]
-                         + r[i3][i2 + 2][i1] + r[i3 + 2][i2 + 2][i1];
+                x1[i1] = r[i3 + 1][i2][i1]+ r[i3][i2 + 1][i1] + r[i3 + 1][i2 + 2][i1]
+                          + r[i3 + 2][i2 + 1][i1];
+                y1[i1] = r[i3][i2][i1] + r[i3][i2 + 2][i1] + r[i3 + 2][i2][i1]
+                         + r[i3 + 2][i2 + 2][i1];
+                i1=i1+2;
             }
-
+            i1 = 2 - d1;
             for (j1 = 1; j1 < m1j - 1; j1++) {
-                i1 = 2 * j1 - d1;
-                y2 = r[i3][i2][i1 + 1] + r[i3 + 2][i2][i1 + 1]
-                     + r[i3][i2 + 2][i1 + 1] + r[i3 + 2][i2 + 2][i1 + 1];
+                y2 = r[i3][i2][i1 + 1] + r[i3][i2 + 2][i1 + 1]
+                        + r[i3 + 2][i2][i1 + 1] + r[i3 + 2][i2 + 2][i1 + 1];
                 x2 = r[i3 + 1][i2][i1 + 1] + r[i3 + 1][i2 + 2][i1 + 1]
-                     + r[i3][i2 + 1][i1 + 1] + r[i3 + 2][i2 + 1][i1 + 1];
+                        + r[i3][i2 + 1][i1 + 1] + r[i3 + 2][i2 + 1][i1 + 1];
                 s[j3][j2][j1] =
                         0.5 * r[i3 + 1][i2 + 1][i1 + 1]
                         + 0.25 * (r[i3 + 1][i2 + 1][i1] + r[i3 + 1][i2 + 1][i1 + 2] + x2)
                         + 0.125 * (x1[i1] + x1[i1 + 2] + y2)
                         + 0.0625 * (y1[i1] + y1[i1 + 2]);
+                i1=i1+2;
             }
+            i2 = i2 +2;
         }
+        i3 = i3 +2;
     }
     if (timeron) timer_stop(T_rprj3);
 
