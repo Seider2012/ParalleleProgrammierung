@@ -471,7 +471,7 @@ static void psinv(void *or, void *ou, int n1, int n2, int n3,
         double r1[M], r2[M];
 
         if (timeron) timer_start(T_psinv);
-#pragma omp parallel for private(r1, r2) collapse(2)
+#pragma omp parallel for schedule(static,1024) private(r1, r2) collapse(2)
         for (i3 = 1; i3 < n3 - 1; i3++) {
             for (i2 = 1; i2 < n2 - 1; i2++) {
                 r1[0] = r[i3][i2 - 1][0] + r[i3][i2 + 1][0]
@@ -591,7 +591,7 @@ static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
         if (timeron) timer_start(T_resid);
         if(a[1]>-0.0001&&a[1]<0.0001&&a[2]>-0.0001&&a[2]<0.0001&&a[3]>-0.0001&&a[3]<0.0001){
             printf("%f   ,%f   ",a[2],a[3]);
-#pragma omp parallel for collapse(3)
+#pragma omp parallel for schedule(static,1024) collapse(3)
             for (i3 = 1; i3 < n3 - 1; i3++) {
                 for (i2 = 1; i2 < n2 - 1; i2++) {
                     for (i1 = 1; i1 < n1 - 1; i1++) {
@@ -601,7 +601,7 @@ static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
                 }
             }
         }  else {
-#pragma omp parallel for private(u1, u2) collapse(2)
+#pragma omp parallel for schedule(static,1024) private(u1, u2) collapse(2)
             for (i3 = 1; i3 < n3 - 1; i3++) {
                 for (i2 = 1; i2 < n2 - 1; i2++) {
                     u1[0] = u[i3][i2 - 1][0] + u[i3][i2 + 1][0]
