@@ -152,11 +152,11 @@ void f9(int *t1[], int *t2[], int *t3[], int N) {
         }
     }
 };
-void S9(int *t1[], int *t2[], int *t3[], int N) {
+void S9(double *t1[], double *t2[], double *t3[], int N) {
 
-    int (*a)[N] = (int (*)[N]) t1;
-    int (*b)[N] = (int (*)[N]) t2;
-    int (*c)[N] = (int (*)[N]) t3;
+    double (*a)[N] = (double (*)[N]) t1;
+    double (*b)[N] = (double (*)[N]) t2;
+    double (*c)[N] = (double (*)[N]) t3;
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             for (int k = 0; k < N; ++k) {
@@ -185,9 +185,9 @@ int main(int argc, void **argv) {
     int f[n];
 
 
-    int t1[n][n];
-    int t2[n][n];
-    int t3[n][n];
+    double t1[n][n];
+    double t2[n][n];
+    double t3[n][n];
 
     f1(a, b, n);
     f2(a, b, c, d, e, f, n);
@@ -215,15 +215,15 @@ int main(int argc, void **argv) {
         printf("e = %d\n", e[i]);
         printf("f = %d\n", f[i]);
         for (int j = 0; j < n; j++) {
-            printf("t1 = %d ", t1[i][j]);
+            printf("t1 = %f ", t1[i][j]);
         }
         printf("\n");
         for (int j = 0; j < n; j++) {
-            printf("t2 = %d ", t1[i][j]);
+            printf("t2 = %f ", t1[i][j]);
         }
         printf("\n");
         for (int j = 0; j < n; j++) {
-            printf("t3 = %d ", t1[i][j]);
+            printf("t3 = %f ", t1[i][j]);
         }
         printf("\n");
 
