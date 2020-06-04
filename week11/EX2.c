@@ -184,9 +184,9 @@ int main(int argc, void **argv) {
     int f[n];
 
 
-    double **t1 = malloc((sizeof(double)*n*n));
-    double **t2 = malloc((sizeof(double)*n*n));
-    double **t3 = malloc((sizeof(double)*n*n));
+    double t1[n][n];
+    double t2[n][n];
+    double t3[n][n];
     f1(a, b, n);
     f2(a, b, c, d, e, f, n);
     f3(a, n);
@@ -227,8 +227,6 @@ int main(int argc, void **argv) {
 
     }
 
-    free(t1);
-    free(t2);
-    free(t3);
+
     return EXIT_SUCCESS;
 }
