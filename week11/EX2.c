@@ -39,7 +39,7 @@ void S2(int a[], int b[], int c[], int d[], int e[], int f[], int N) {
 };
 
 double hypot(double c1, double c2) {
-    return (sqrt((c1 * c1 + c2 * c2)));
+    return 0.5;//(sqrt((c1 * c1 + c2 * c2)));
 };
 
 void f3(int a[], int N) {
