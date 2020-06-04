@@ -139,11 +139,10 @@ void S8(int a[], int b[],int c[], int N) {
         a[i] = c[i] + 5;
     }
 };
-void f9(int *t1[], int *t2[], int *t3[], int N) {
-
-    int (*a)[N] = (int (*)[N]) t1;
-    int (*b)[N] = (int (*)[N]) t2;
-    int (*c)[N] = (int (*)[N]) t3;
+void f9(double **t1, double **t2, double **t3, int N) {
+    double (*a)[N] = (double (*)[N]) t1;
+    double (*b)[N] = (double (*)[N]) t2;
+    double (*c)[N] = (double (*)[N]) t3;
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             for (int k = 0; k < N; ++k) {
@@ -152,7 +151,7 @@ void f9(int *t1[], int *t2[], int *t3[], int N) {
         }
     }
 };
-void S9(double *t1[], double *t2[], double *t3[], int N) {
+void S9(double **t1, double **t2, double **t3, int N) {
 
     double (*a)[N] = (double (*)[N]) t1;
     double (*b)[N] = (double (*)[N]) t2;
