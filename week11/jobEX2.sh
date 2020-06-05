@@ -28,5 +28,20 @@
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
 gcc -std=c99 -O3 EX2.c -o EX2
-perf ./EX2
+perf stat ./EX2 1 0
+perf stat ./EX2 2 0
+perf stat ./EX2 3 0
+perf stat ./EX2 4 0
+perf stat ./EX2 5 0
+perf stat ./EX2 6 0
+perf stat ./EX2 7 0
+perf stat ./EX2 8 0
+perf stat ./EX2 9 0
+perf stat ./EX2 10 0
+perf stat ./EX2 11 0
+perf stat ./EX2 12 0
+perf stat ./EX2 13 0
+perf stat ./EX2 14 0
+perf stat ./EX2 15 0
+perf stat ./EX2 16 0
 export OMP_NUM_THREADS=1
