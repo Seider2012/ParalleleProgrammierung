@@ -3,11 +3,11 @@ project(week10)
 
 #set(CMAKE_C_STANDARD 99)
 # added -fopenmp
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1 -ftree-vectorize -fassociative-math -ftree-vectorizer-verbose=2 -fopenmp")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1 -fopenmp")
 
 
 add_executable(EX1 EX1.c)
-
+add_executable(EX2 EX2.c)
 
 message(STATUS "Checking OpenMP")
 find_package(OpenMP)

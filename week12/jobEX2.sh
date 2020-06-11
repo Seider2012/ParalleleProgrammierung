@@ -8,10 +8,10 @@
 
 # Name of your job. Unless you use the -o and -e options, output will
 # go to a unique file name.ojob_id for each job.
-#$ -N ResEx1
+#$ -N ResEx2
 
 # Redirect output stream to this file.
-#$ -o ResEx1.dat
+#$ -o ResEx2.dat
 
 # Join the error stream to the output stream.
 #$ -j yes
@@ -27,12 +27,8 @@
 
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
- gcc -std=c99 -O1 -fopenmp EX1.c -o EX1_1.out
-./EX1_1.out 1000
-./EX1_1.out 500
-./EX1_1.out 100
- gcc -std=c99 -O1 -ftree-vectorize -fopenmp EX1.c -o EX1_2.out
-./EX1_2.out 1000
-./EX1_2.out 500
-./EX1_2.out 100
+ gcc -std=c99 -O1 -fopenmp EX2.c -o EX2.out
+./EX2.out 1000
+./EX2.out 500
+./EX2.out 100
 #export OMP_NUM_THREADS=1

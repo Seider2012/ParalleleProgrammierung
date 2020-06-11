@@ -471,7 +471,8 @@ static void psinv(void *or, void *ou, int n1, int n2, int n3,
         double r1[M], r2[M];
 
         if (timeron) timer_start(T_psinv);
-#pragma omp parallel for schedule(static,1024) private(r1, r2) collapse(2)
+        if(n3>50){
+#pragma omp parallel for private(r1, r2) collapse(2)
         for (i3 = 1; i3 < n3 - 1; i3++) {
             for (i2 = 1; i2 < n2 - 1; i2++) {
                 r1[0] = r[i3][i2 - 1][0] + r[i3][i2 + 1][0]
@@ -492,13 +493,44 @@ static void psinv(void *or, void *ou, int n1, int n2, int n3,
                                     + c[0] * r[i3][i2][i1]
                                     + c[1] * (r[i3][i2][i1 - 1] + r[i3][i2][i1 + 1]
                                               + r1[i1])
-                                    + c[2] * (r2[i1] + r1[i1 - 1] + r1[i1 + 1])
-                                    + c[3] * (r2[i1 - 1] + r2[i1 + 1]);
+                                    + c[2] * (r2[i1] + r1[i1 - 1] + r1[i1 + 1]);
                     //--------------------------------------------------------------------
                     // Assume c[3] = 0    (Enable line below if c[3] not= 0)
                     //--------------------------------------------------------------------
                     //            + c[3] * ( r2[i1-1] + r2[i1+1] )
                     //--------------------------------------------------------------------
+                }
+            }
+        }
+        } else{
+            for (i3 = 1; i3 < n3 - 1; i3++) {
+                for (i2 = 1; i2 < n2 - 1; i2++) {
+                    r1[0] = r[i3][i2 - 1][0] + r[i3][i2 + 1][0]
+                            + r[i3 - 1][i2][0] + r[i3 + 1][i2][0];
+                    r2[0] = r[i3 - 1][i2 - 1][0] + r[i3 - 1][i2 + 1][0]
+                            + r[i3 + 1][i2 - 1][0] + r[i3 + 1][i2 + 1][0];
+                    r1[1] = r[i3][i2 - 1][1] + r[i3][i2 + 1][1]
+                            + r[i3 - 1][i2][1] + r[i3 + 1][i2][1];
+                    r2[1] = r[i3 - 1][i2 - 1][1] + r[i3 - 1][i2 + 1][1]
+                            + r[i3 + 1][i2 - 1][1] + r[i3 + 1][i2 + 1][1];
+                    for (i1 = 1; i1 < n1-1; i1++) {
+                        int buffer = i1 + 1;
+                        r1[buffer] = r[i3][i2 - 1][buffer] + r[i3][i2 + 1][buffer]
+                                     + r[i3 - 1][i2][buffer] + r[i3 + 1][i2][buffer];
+                        r2[buffer] = r[i3 - 1][i2 - 1][buffer] + r[i3 - 1][i2 + 1][buffer]
+                                     + r[i3 + 1][i2 - 1][buffer] + r[i3 + 1][i2 + 1][buffer];
+                        u[i3][i2][i1] = u[i3][i2][i1]
+                                        + c[0] * r[i3][i2][i1]
+                                        + c[1] * (r[i3][i2][i1 - 1] + r[i3][i2][i1 + 1]
+                                                  + r1[i1])
+                                        + c[2] * (r2[i1] + r1[i1 - 1] + r1[i1 + 1])
+                                        + c[3] * (r2[i1 - 1] + r2[i1 + 1]);
+                        //--------------------------------------------------------------------
+                        // Assume c[3] = 0    (Enable line below if c[3] not= 0)
+                        //--------------------------------------------------------------------
+                        //            + c[3] * ( r2[i1-1] + r2[i1+1] )
+                        //--------------------------------------------------------------------
+                    }
                 }
             }
         }
@@ -588,20 +620,9 @@ static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
         int i3, i2, i1;
         double u1[M], u2[M];
 
+
         if (timeron) timer_start(T_resid);
-        if(a[1]>-0.0001&&a[1]<0.0001&&a[2]>-0.0001&&a[2]<0.0001&&a[3]>-0.0001&&a[3]<0.0001){
-            printf("%f   ,%f   ",a[2],a[3]);
-#pragma omp parallel for schedule(guided) collapse(3)
-            for (i3 = 1; i3 < n3 - 1; i3++) {
-                for (i2 = 1; i2 < n2 - 1; i2++) {
-                    for (i1 = 1; i1 < n1 - 1; i1++) {
-                        r[i3][i2][i1] = v[i3][i2][i1]
-                                -a[0] * u[i3][i2][i1];
-                    }
-                }
-            }
-        }  else {
-#pragma omp parallel for schedule(guided) private(u1, u2) collapse(2)
+        if(n3<50){
             for (i3 = 1; i3 < n3 - 1; i3++) {
                 for (i2 = 1; i2 < n2 - 1; i2++) {
                     u1[0] = u[i3][i2 - 1][0] + u[i3][i2 + 1][0]
@@ -620,7 +641,31 @@ static void resid(void *ou, void *ov, void *or, int n1, int n2, int n3,
                                      + u[i3 + 1][i2 - 1][buffer] + u[i3 + 1][i2 + 1][buffer];
                         r[i3][i2][i1] = v[i3][i2][i1]
                                         - a[0] * u[i3][i2][i1]
-                                        - a[1] * ( u[i3][i2][i1-1] + u[i3][i2][i1+1] + u1[i1] )
+                                        - a[2] * (u2[i1] + u1[i1 - 1] + u1[i1 + 1])
+                                        - a[3] * (u2[i1 - 1] + u2[i1 + 1]);
+                    }
+                }
+            }
+        }  else {
+#pragma omp parallel for private(u1, u2)  collapse(2)
+            for (i3 = 1; i3 < n3 - 1; i3++) {
+                for (i2 = 1; i2 < n2 - 1; i2++) {
+                    u1[0] = u[i3][i2 - 1][0] + u[i3][i2 + 1][0]
+                            + u[i3 - 1][i2][0] + u[i3 + 1][i2][0];
+                    u2[0] = u[i3 - 1][i2 - 1][0] + u[i3 - 1][i2 + 1][0]
+                            + u[i3 + 1][i2 - 1][0] + u[i3 + 1][i2 + 1][0];
+                    u1[1] = u[i3][i2 - 1][1] + u[i3][i2 + 1][1]
+                            + u[i3 - 1][i2][1] + u[i3 + 1][i2][1];
+                    u2[1] = u[i3 - 1][i2 - 1][1] + u[i3 - 1][i2 + 1][1]
+                            + u[i3 + 1][i2 - 1][1] + u[i3 + 1][i2 + 1][1];
+                    for (i1 = 1; i1 < n1 - 1; i1++) {
+                        int buffer = i1 + 1;
+                        u1[buffer] = u[i3][i2 - 1][buffer] + u[i3][i2 + 1][buffer]
+                                     + u[i3 - 1][i2][buffer] + u[i3 + 1][i2][buffer];
+                        u2[buffer] = u[i3 - 1][i2 - 1][buffer] + u[i3 - 1][i2 + 1][buffer]
+                                     + u[i3 + 1][i2 - 1][buffer] + u[i3 + 1][i2 + 1][buffer];
+                        r[i3][i2][i1] = v[i3][i2][i1]
+                                        - a[0] * u[i3][i2][i1]
                                         - a[2] * (u2[i1] + u1[i1 - 1] + u1[i1 + 1])
                                         - a[3] * (u2[i1 - 1] + u2[i1 + 1]);
                     }

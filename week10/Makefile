@@ -16,5 +16,5 @@ clean:
 .PHONEY: run
 run: all
 	@echo "Parallel:"
-	@./real 1
+	@./real
 	@echo
