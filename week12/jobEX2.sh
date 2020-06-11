@@ -28,7 +28,10 @@
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
  gcc -std=c99 -O1 -fopenmp EX2.c -o EX2.out
-./EX2.out 1000
-./EX2.out 500
-./EX2.out 100
+./EX2.out 0 1000
+./EX2.out 0 500
+./EX2.out 0 100
+./EX2.out 1 1000
+./EX2.out 1 500
+./EX2.out 1 100
 #export OMP_NUM_THREADS=1
