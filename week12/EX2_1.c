@@ -15,9 +15,9 @@ int main(int argc, void **argv) {
 
     }
     double start, end;
-    float *a = (float *)aligned_alloc(32, sizeof(float));
-    float *b = (float *)aligned_alloc(32, sizeof(float));
-    float *c = (float *)aligned_alloc(32, sizeof(float));
+    float *a = (float *)aligned_alloc(32, sizeof(float)*N);
+    float *b = (float *)aligned_alloc(32, sizeof(float)*N);
+    float *c = (float *)aligned_alloc(32, sizeof(float)*N);
     float c1, c2, c3;
     c1 = 0;
     c2 = 1;
