@@ -4,13 +4,14 @@
 #include <math.h>
 #include <omp.h>
 
-#define N 1000
+//#define N 1000
 
 int main(int argc, void **argv) {
     int repetitions = 1000000;
+    int N=1000;
     if (argc == 2) {
         char **p;
-        repetitions = (int) strtol(argv[1], p, 10);
+        N = (int) strtol(argv[1], p, 10);
     }
     double start,end;
     float a[N];
