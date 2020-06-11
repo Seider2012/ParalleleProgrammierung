@@ -15,9 +15,9 @@ int main(int argc, void **argv) {
 
     }
     double start, end;
-    double *a = aligned_alloc(32, sizeof(double));
-    double *b = aligned_alloc(32, sizeof(double));
-    double *c = aligned_alloc(32, sizeof(double));
+    double *a = (double *)aligned_alloc(64, sizeof(double));
+    double *b = (double *)aligned_alloc(64, sizeof(double));
+    double *c = (double *)aligned_alloc(64, sizeof(double));
     double c1, c2, c3;
     c1 = 0;
     c2 = 1;
@@ -44,5 +44,7 @@ int main(int argc, void **argv) {
     }
 
     printf("%s, N= %d, time = %f s\n", correctness ? "SUCCESS" : "FAILURE", N, end - start);
-
+    free(a);
+    free(b);
+    free(c);
 }

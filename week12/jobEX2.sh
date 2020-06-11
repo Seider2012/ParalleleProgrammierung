@@ -32,7 +32,7 @@ module load gcc/8.2.0
 ./EX2_1.out 500
 ./EX2_1.out 100
  gcc -std=c99 -O1 -fopenmp EX2_2.c -o EX2_2.out
-./EX2_2.out 1 1000
-./EX2_2.out 1 500
-./EX2_2.out 1 100
+./EX2_2.out 1000
+./EX2_2.out 500
+./EX2_2.out 100
 #export OMP_NUM_THREADS=1
