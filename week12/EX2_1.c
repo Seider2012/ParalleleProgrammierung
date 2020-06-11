@@ -15,9 +15,9 @@ int main(int argc, void **argv) {
 
     }
     double start, end;
-    float *a = (float *)aligned_alloc(32, sizeof(float)*N);
-    float *b = (float *)aligned_alloc(32, sizeof(float)*N);
-    float *c = (float *)aligned_alloc(32, sizeof(float)*N);
+    float *a = (float *) aligned_alloc(32, sizeof(float) * N);
+    float *b = (float *) aligned_alloc(32, sizeof(float) * N);
+    float *c = (float *) aligned_alloc(32, sizeof(float) * N);
     float c1, c2, c3;
     c1 = 0;
     c2 = 1;
@@ -29,9 +29,11 @@ int main(int argc, void **argv) {
     }
     start = omp_get_wtime();
 #pragma omp simd aligned(a, b, c:32)
-    for (int run = 0; run < repetitions; ++run) {
-        for (int i = 0; i < N; ++i) {
-            a[i] += b[i] * c[i];
+    {
+        for (int run = 0; run < repetitions; ++run) {
+            for (int i = 0; i < N; ++i) {
+                a[i] += b[i] * c[i];
+            }
         }
     }
     end = omp_get_wtime();

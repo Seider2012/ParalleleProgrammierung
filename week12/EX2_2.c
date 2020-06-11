@@ -15,9 +15,9 @@ int main(int argc, void **argv) {
 
     }
     double start, end;
-    double *a = (double *)aligned_alloc(64, sizeof(double)*N);
-    double *b = (double *)aligned_alloc(64, sizeof(double)*N);
-    double *c = (double *)aligned_alloc(64, sizeof(double)*N);
+    double *a = (double *) aligned_alloc(64, sizeof(double) * N);
+    double *b = (double *) aligned_alloc(64, sizeof(double) * N);
+    double *c = (double *) aligned_alloc(64, sizeof(double) * N);
     double c1, c2, c3;
     c1 = 0;
     c2 = 1;
@@ -29,9 +29,11 @@ int main(int argc, void **argv) {
     }
     start = omp_get_wtime();
 #pragma omp simd aligned(a, b, c:64)
-    for (int run = 0; run < repetitions; ++run) {
-        for (int i = 0; i < N; ++i) {
-            a[i] += b[i] * c[i];
+    {
+        for (int run = 0; run < repetitions; ++run) {
+            for (int i = 0; i < N; ++i) {
+                a[i] += b[i] * c[i];
+            }
         }
     }
     end = omp_get_wtime();
@@ -42,6 +44,7 @@ int main(int argc, void **argv) {
             correctness = 0;
         }
     }
+
 
     printf("%s, N= %d, time = %f s\n", correctness ? "SUCCESS" : "FAILURE", N, end - start);
 }
