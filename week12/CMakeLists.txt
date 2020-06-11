@@ -7,7 +7,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1 -fopenmp")
 
 
 add_executable(EX1 EX1.c)
-add_executable(EX2 EX2.c)
+add_executable(EX2_1 EX2_1.c)
+add_executable(EX2_2 EX2_2.c)
 
 message(STATUS "Checking OpenMP")
 find_package(OpenMP)
