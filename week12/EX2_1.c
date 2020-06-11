@@ -28,14 +28,12 @@ int main(int argc, void **argv) {
         c[i] = c3;
     }
     start = omp_get_wtime();
-#pragma omp simd aligned(a, b, c:32)
-    {
         for (int run = 0; run < repetitions; ++run) {
+#pragma omp simd aligned(a, b, c:32)
             for (int i = 0; i < N; ++i) {
                 a[i] += b[i] * c[i];
             }
         }
-    }
     end = omp_get_wtime();
     int correctness = 1;
     for (int i = 0; i < N; ++i) {
