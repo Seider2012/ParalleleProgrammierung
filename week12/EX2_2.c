@@ -44,7 +44,4 @@ int main(int argc, void **argv) {
     }
 
     printf("%s, N= %d, time = %f s\n", correctness ? "SUCCESS" : "FAILURE", N, end - start);
-    free(a);
-    free(b);
-    free(c);
 }
