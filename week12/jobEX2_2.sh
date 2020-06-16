@@ -28,17 +28,17 @@
 # Use gcc 8.2.0 as the default gcc
 module load gcc/8.2.0
  gcc -std=c11 -O1 -fopenmp EX2_1.c -o EX2_1.out
-perf stat -e rC701 ./EX2_1.out
-perf stat -e rC702 ./EX2_1.out
-perf stat -e rC704 ./EX2_1.out
-perf stat -e rC708 ./EX2_1.out
-perf stat -e rC710 ./EX2_1.out
-perf stat -e rC7F1 ./EX2_1.out
+perf stat -e r01C7 ./EX2_1.out
+perf stat -e r02C7 ./EX2_1.out
+perf stat -e r04C7 ./EX2_1.out
+perf stat -e r08C7 ./EX2_1.out
+perf stat -e r10C7 ./EX2_1.out
+perf stat -e rF1C7 ./EX2_1.out
  gcc -std=c11 -O1 -fopenmp EX2_2.c -o EX2_2.out
-perf stat -e rC701 ./EX2_2.out
-perf stat -e rC702 ./EX2_2.out
-perf stat -e rC704 ./EX2_2.out
-perf stat -e rC708 ./EX2_2.out
-perf stat -e rC710 ./EX2_2.out
-perf stat -e rC7F1 ./EX2_2.out
+perf stat -e r01C7 ./EX2_2.out
+perf stat -e r02C7 ./EX2_2.out
+perf stat -e r04C7 ./EX2_2.out
+perf stat -e r08C7 ./EX2_2.out
+perf stat -e r10C7 ./EX2_2.out
+perf stat -e rF1C7 ./EX2_2.out
 #export OMP_NUM_THREADS=1

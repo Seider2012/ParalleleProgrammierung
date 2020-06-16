@@ -35,4 +35,16 @@ module load gcc/8.2.0
 ./EX1_2.out 1000
 ./EX1_2.out 500
 ./EX1_2.out 100
-#export OMP_NUM_THREADS=1
+
+perf stat -e r01C7 ./EX1_1.out 1000
+perf stat -e r02C7 ./EX1_1.out 1000
+perf stat -e r04C7 ./EX1_1.out 1000
+perf stat -e r08C7 ./EX1_1.out 1000
+perf stat -e r10C7 ./EX1_1.out 1000
+perf stat -e rF1C7 ./EX1_1.out 1000
+perf stat -e r01C7 ./EX1_2.out 1000
+perf stat -e r02C7 ./EX1_2.out 1000
+perf stat -e r04C7 ./EX1_2.out 1000
+perf stat -e r08C7 ./EX1_2.out 1000
+perf stat -e r10C7 ./EX1_2.out 1000
+perf stat -e rF1C7 ./EX1_2.out 1000
