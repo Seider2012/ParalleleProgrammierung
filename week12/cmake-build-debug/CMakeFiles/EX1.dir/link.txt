@@ -1,0 +1,1 @@
+/usr/bin/cc  -fopenmp -g  -Wl,--enable-auto-import  CMakeFiles/EX1.dir/EX1.c.o  -o EX1.exe -Wl,--out-implib,libEX1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12/EX1.c
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+omp.h
+-
+

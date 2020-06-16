@@ -1,0 +1,5 @@
+/cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12/cmake-build-debug/CMakeFiles/edit_cache.dir
+/cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12/cmake-build-debug/CMakeFiles/EX2_2.dir
+/cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12/cmake-build-debug/CMakeFiles/EX1.dir
+/cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12/cmake-build-debug/CMakeFiles/EX2_1.dir

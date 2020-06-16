@@ -1,0 +1,1 @@
+/usr/bin/cc  -fopenmp -g  -Wl,--enable-auto-import  CMakeFiles/EX2_2.dir/EX2_2.c.o  -o EX2_2.exe -Wl,--out-implib,libEX2_2.dll.a -Wl,--major-image-version,0,--minor-image-version,0 

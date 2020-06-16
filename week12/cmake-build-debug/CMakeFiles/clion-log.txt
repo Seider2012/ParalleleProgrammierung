@@ -1,0 +1,6 @@
+C:\Users\Seider\.CLion2019.3\system\cygwin_cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12
+-- Checking OpenMP
+Found OpenMP!
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /cygdrive/c/Users/Seider/CLionProjects/ParalleleProgrammierung/week12/cmake-build-debug
